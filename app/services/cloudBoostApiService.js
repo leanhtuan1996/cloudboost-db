@@ -139,12 +139,11 @@ app.factory('cloudBoostApiService', ['$q','$http','$rootScope',function ($q,$htt
     return  q.promise;      
   };
 
-  global.getCBFile = function(fileObj,successCallBk,errorCallBk,progressCallBk,path){  
+  global.getCBFile = function(fileObj,successCallBk,errorCallBk,progressCallBk){  
 
     //var q=$q.defer();
 
       var file = new CB.CloudFile(fileObj);
-      file.path=path;
       file.save({
         success: function(newFile) {          
           successCallBk(newFile); 

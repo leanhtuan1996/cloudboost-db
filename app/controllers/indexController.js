@@ -16,7 +16,6 @@ app.controller('indexController',
   'beaconService',
   'paymentService',
   'analyticsService',
-  "$cookies",
 	function($scope,
     $q,
     $http,
@@ -33,19 +32,7 @@ app.controller('indexController',
     tableService,
     beaconService,
     paymentService,
-    analyticsService,
-    $cookies){	
-
-    //Get Querystring.
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+    analyticsService){	
 
     //Index page variables
     $scope.isAdminLoggedIn=false;
@@ -76,18 +63,6 @@ app.controller('indexController',
     $rootScope.openBillingPlan=false;
     $rootScope.cardDetailsStep1=true;
     $rootScope.cardDetailsStep2=false;
-
-    if((getParameterByName("provider") && getParameterByName("provider") === "heroku")|| ($cookies.get('provider') && $cookies.get('provider') === "heroku")){
-      $rootScope.provider="heroku";
-      $cookies.put('provider', 'heroku');
-      $cookies.put('herokuApp', $cookies.get('herokuApp') || getParameterByName("app"));
-      $rootScope.herokuAppName = $cookies.get('herokuApp');
-      Boomerang.init({app: $rootScope.herokuAppName, addon: 'CloudBoost'});
-    }
-
-    if(getParameterByName("userId")){
-      $cookies.put('userId', getParameterByName("userId"));
-    }
 
     $rootScope.cardDetails={    
       number:null,
@@ -293,12 +268,12 @@ app.controller('indexController',
       $scope.cardNeedFreePlan=false;
 
       //Show Next Plan
-      if(projectObj.planId && projectObj.planId>1 && projectObj.planId<5){
+      if(projectObj.planId && projectObj.planId>1 && projectObj.planId<6){
         $scope.requestedPlan=getPlanById(projectObj.planId+1);
-      }else if(projectObj.planId==5){
-        $scope.requestedPlan=getPlanById(5);
+      }else if(projectObj.planId==6){
+        $scope.requestedPlan=getPlanById(6);
       }else if(!projectObj.planId || projectObj.planId==1){
-        $scope.requestedPlan=getPlanById(2);
+        $scope.requestedPlan=getPlanById(3);
       }
       
       if(!__isDevelopment){
@@ -674,7 +649,7 @@ app.controller('indexController',
       $.removeCookie('email', { path: '/' });
       $.removeCookie('createdAt', { path: '/' });
 
-      window.location.href=ACCOUNTS_URL;
+      window.location.href="/accounts";
     },function(error){
       console.log(error);
     });      
@@ -685,11 +660,7 @@ app.controller('indexController',
   };
 
   $rootScope.goToPage=function(appId,pageName){
-    if(pageName == 'files'){
-      window.location.href = FILES_URL + "/" + appId;
-    } else {
-      window.location.href="#/"+appId+"/"+pageName;
-    }
+    window.location.href="#/"+appId+"/"+pageName;
   };   
 
   $scope.renderHtml = function (htmlCode) {
@@ -781,7 +752,7 @@ app.controller('indexController',
       return $location.path();
     },function(newPath,oldPath) {
         if(!$.cookie('userId') || $.cookie('userId')=="null" || $.cookie('userId')=="undefined"){          
-          window.location.href=ACCOUNTS_URL;
+          window.location.href="/accounts";
         }else{
           $rootScope.userFullname=$.cookie('userFullname');
           /*if($rootScope.user && $rootScope.user.isAdmin && !$scope.isAdminLoggedIn){

@@ -232,7 +232,6 @@ $scope.showCommonTypes=function(row,column){
   if(column.document.dataType=="File"){
 
     $scope.editableFile.push(angular.copy(row.get(column.name)));
-    $scope.metaData=null;
     $("#md-fileviewer").modal();     
 
   }

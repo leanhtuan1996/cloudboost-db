@@ -3,7 +3,7 @@
 #
 
 # Pull base image nodejs image.
-FROM node:boron
+FROM node:5.2
 
 #Maintainer.
 MAINTAINER Nawaz Dhandala <nawazdhandala@outlook.com>
