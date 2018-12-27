@@ -1,0 +1,100 @@
+.profile-page{	
+	height: 89.4vh;
+	overflow: auto;
+}
+
+.profile-pic-wrap{	
+	border-radius:75px !important;
+	height:150px;
+	width:150px;	
+	overflow: hidden;
+	border:3px solid #F7F4F4;
+}
+.profile-photo{		
+}
+.profile-pic-editsettings{
+	border-radius:75px !important;
+	height:150px;
+	width:150px;	
+	overflow: hidden;
+	background-color: black;
+	opacity: 0.7;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+}
+
+.profile-pic-spinner{
+	border-radius:75px !important;
+	height:150px;
+	width:150px;	
+	overflow: hidden;	
+	top: 0;
+	left: 0;	
+}
+
+.profile-pic-wrap:hover .profile-pic-editsettings{
+	visibility: visible;
+}
+.profile-edit-pencil{
+	visibility: hidden;	
+}
+.profile-value:hover .profile-edit-pencil{
+	visibility: visible;
+}
+
+.nav-profile-tabs{
+	cursor: pointer;
+	font-weight: 500;
+	color: black;
+}
+
+
+.profileActive{
+	color:#4892F9 !important;
+	border-bottom:1px solid #4892F9;	
+}
+.profileActiveAnchor{
+	color:#4892F9 !important;			
+}
+.profile-tab-links{
+	height:40px;
+	margin-top:15px;		
+}
+.profile-tab-links a{	
+	font-size:15px !important;
+	padding-top:10px !important;
+	padding-bottom:4px !important;
+	color:#B5B3B3;
+	border:none !important;
+}
+
+.profile-tab-links a:hover{	
+	color:gray !important;
+}
+.ul-wrapper{
+	width:100%;
+	border-bottom:1px solid #E2E0E0;
+	height:49.7px;
+}
+.change-password-block{
+	width:100%;	
+	margin-top:5%;
+}
+.profile-tab{
+	height:80vh !important;
+	padding-top:25px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-bottom:20px;	
+	border: none !important;
+}
+.billing-tab{	
+	height:100%;
+	padding:14px;
+	border: none !important;
+}
+.billing-card-labels{
+	font-size:16px;
+	font-weight:500;
+}

@@ -1,0 +1,578 @@
+
+<div ng-init="init()">
+
+  <div class="row" ng-show="!firstVisit">
+    <div class="apps-panel-wrapper">
+      <div style="height:50px;width:100%;border-bottom:1px solid #DEE0E0;">
+
+        <!--Search Cache-->
+        <div class="cache-search-wrapper pull-left">        
+          <div class="flex-general-row-wrapper cache-search-container">
+            <!--Search Icon-->           
+            <i class="icon ion-ios-search-strong" style="font-size: 24px;margin-top: -2px !important;color:#bcb4b0;" ></i>     
+
+            <!--Search Input-->
+            <div class=""  style="height:100%;width:88.5%;margin-left:4px;">
+              <input type="text" class="cache-search-input" style="width:100%;height:100%;" placeholder="Search Cache" ng-model="searchThisName">
+            </div>        
+
+          </div> 
+        </div>
+        <!--/Search Cache-->
+
+        <!--Create Cache-->
+        <div class="pull-right flex-general-column-wrapper-center" style="border-left:1px solid #DEE0E0;width:34%;background-color:#EDEDEF;">
+          <div class="flex-general-row-wrapper" style="padding-top:6px;cursor:pointer !important;" ng-click="initCreateCache()">
+
+
+            <div class=""  style="margin-top:5px;margin-left:3px;">
+              <div class="flex-general-column-wrapper-center" style="height:27px;width:27px;">
+                <i class="icon ion-plus" style="font-size: 20px;margin-top: 0px !important;color:#8F8F91;" ></i>
+              </div>
+            </div>
+
+            <div class=""  style="height:100%;">
+              <div class="" style="height:34px;margin-top:9px;">
+                <span style="font-size:14px;color:#8F8F91;">Create Cache</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--/Create Cache-->
+      </div>
+      
+      <div class="cache-list-wrapper">
+        <div class="cache-list-container" malihuscrollbar-for-popup> 
+
+          <!--Info-->
+          <div ng-repeat="eachCache in cacheList | filter:searchThisName" ng-click="openCacheDetails(eachCache)" class="each-cache-wrapper flex-general-row-wrapper" ng-class="{activeCache:activeCache[$index]}">
+
+            <div class="cache-resembler-wrapper flex-general-column-wrapper-center pull-left">
+              <div class="flex-general-column-wrapper-center cache-resembler-contain" style="">
+                <i class="fa fa-bolt" style=""></i>
+              </div>
+            </div>
+
+            <div class="cache-app-name-wrapper pull-left" style="margin-top:2px;">
+              <div>
+                <span class="mycache-name" style="">{{eachCache.name | characters:24}}</span>
+              </div>
+
+              <div class="flex-general-row-wrapper" style="margin-left:5px;">
+
+                <div class="flex-general-row-wrapper">
+                  <div>
+                    <span class="cache-size-label" style="">SIZE:</span>
+                  </div>
+                  <div>
+                    <span class="cache-size-val" style="">{{eachCache.size}}</span>
+                  </div>
+                </div>
+
+                <div class="flex-general-row-wrapper" style="margin-left:15px;">
+                  <div>
+                    <span class="cache-items-label" style="">ITEMS:</span>
+                  </div>
+                  <div>
+                    <span class="cache-items-val" style="">{{cacheItemCount[$index] || 0}}</span>
+                  </div>
+                </div>
+
+              </div>              
+            </div>
+
+            <div class="cache-app-buttons flex-general-row-wrapper pull-right" style="">
+
+              <div class="flex-general-column-wrapper-center cache-clear-btn-wrap" style="margin-left:12%;">
+                <button class="cache-clear-btn" style="" ng-click="initClearCache(eachCache); $event.stopPropagation()">
+                  <div class="flex-general-row-wrapper">
+                      <div class="cache-clear-icon">
+                        <i class="icon ion-android-remove-circle" style=""></i>
+                      </div>
+                      <div class="cache-clear-txt">
+                        <span>Clear</span>
+                      </div>
+                  </div>                 
+                </button>
+              </div>
+
+              <div class="flex-general-column-wrapper-center cache-del-btn-wrap" style="">
+                <button class="cache-del-btn" style="" ng-click="initDeleteCache(eachCache) ; $event.stopPropagation()">
+                  <div class="flex-general-row-wrapper">
+                      <div class="cache-del-icon">
+                        <i class="icon ion-ios-trash" style=""></i>
+                      </div>
+                      <div class="cache-del-txt">
+                        <span>Delete</span>
+                      </div>
+                  </div>                 
+                </button>                
+              </div>
+
+            </div>
+
+          </div> 
+          <!--/End info-->
+
+        </div>
+      </div>            
+
+    </div>
+
+  </div>
+
+  <!--First Display-->
+  <div class="row" ng-show="firstVisit">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="flex-general-column-wrapper-center first-visitto-cache" style="">
+
+      <div style="width:46%;height: 340px;border:1px solid #C0D0DB;border-radius: 2px;background-color: white;padding:20px;">
+
+        <div class="cf" style="height: 25%;width: 100%;">
+
+          <div class="pull-left" class="flex-general-row-wrapper" style="width:60%;height: 100%;">
+
+            <div style="width:100%;height: 100%;" class="flex-general-row-wrapper">
+              <div style="width:23%;height:100%;" class="flex-general-column-wrapper-center">
+                  <div class="flex-general-column-wrapper-center" style="width:100%;height:100%;border-radius: 50px;background-color: #f2b330;">
+                    <i class="fa fa-bolt" style="color:white;font-size: 30px;"></i>
+                  </div>
+              </div>
+
+              <div style="width:59%;height:100%;margin-left:8px;" class="solo-vertical-center">
+                  <div class="" style="padding-left: 5px;">
+                    <div>
+                      <span style="font-size: 18px;font-weight: 600;">CloudBoost Cache</span>
+                    </div>
+                    <div>
+                      <span style="font-size: 14px;">Make your apps faster with Cache.</span>
+                    </div>                 
+                  </div>
+                  
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="pull-right" style="width:28%;height: 100%;">
+              <div style="width:100%;height: 100%;" class="flex-general-row-wrapper">
+                <div style="width:100%;height:54%;margin-top: 2px;"> 
+                  <button style="width: 100%;height: 100%;background-color: #1280E0;color:white;font-size: 14px;border-radius:4px;" class="default-inputfield" ng-click="initCreateCache()">Create Cache</button>                   
+                </div>
+
+                <div style="width: 100%;" class="solo-horizontal-center">
+                  <span></span>
+                </div>
+              </div>            
+          </div>
+
+        </div>
+
+        <div style="height: 68%;width: 100%;margin-top: 20px;" class="flex-general-row-wrapper">
+
+          <div style="width:60%;height: 100%;padding: 20px;background-color: #F7FAFC;">
+            <div style="width: 100%;height: 80%;" class="">
+              <span style="font-size: 18px;font-weight: 500;">
+              Cache help you to store frequently used data on the memory instead of a disk making queries 10 times as fast.
+              </span>
+            </div>
+            <div style="width: 100%;height: 10%;margin-top:9px;" class="flex-general-row-wrapper">
+              <div>
+                <span style="margin-top:1px;">
+                  <i class="icon ion-ios-book" style="color:#1280E0; font-size: 16px;"></i>
+                </span>
+                <span>
+                  <a href="https://tutorials.cloudboost.io/en/cache/basiccache" target="_blank" style="color:#1280E0; font-size: 14px;">Take the Tutorial</a>
+                </span>
+              </div>
+
+              <div style="margin-left: 10px;">
+               
+              </div>
+            </div>
+          </div>
+
+          <div style="width:39%;height: 100%;background-color: #F7FAFC;" class="solo-vertical-center">
+            <img src="assets/images/cache-rocket.png" style="margin-left:15px;">
+          </div>
+        </div>
+      
+      </div>
+
+      </div>
+    </div>
+  </div> 
+  <!--/First Display--> 
+
+  <!--Normal Display-->
+  <div class="row" ng-show="activeCache.length>0 && !firstVisit">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div style="width:100%;height:auto;">
+        <div class="cache-items-details" style="position:relative;">
+
+          <div class="adding-cache-wrapper flex-general-column-wrapper-center">
+            <div class="flex-general-row-wrapper">
+
+              <div class="adding-cache-key-wrapper">
+                <input type="text" class="defaultInput-txt" ng-model="newItem.key" placeholder="Key name" style="width:100%;height:100%;font-size:18px;">
+              </div>
+
+              <div class="adding-cache-val-wrapper">
+                <input type="text" class="defaultInput-txt" ng-model="newItem.value" placeholder="Value" style="width:100%;height:100%;font-size:18px;">
+              </div>
+
+               <div class="adding-cache-btn-wrapper">
+                <!--Add-->
+                <button style="" ng-show="!confirmSpinner" ng-click="addNewItem()">Add Item</button>
+
+                <!--While Adding-->
+                <button style="" ng-show="confirmSpinner">
+                  <i class="fa fa-spinner fa-spin"></i>&nbsp;Adding Item
+                </button>
+              </div>
+
+              <div>
+              </div>
+            </div>
+          </div>
+
+          <div class="listing-cache-wrapper">
+            <div class="" style="width:82%;margin:0 auto;">
+
+                <div ng-show="!itemsError && !itemsLoading && cacheItemsList && cacheItemsList.length>0" class="cache-item-table">
+                  <table class="table" border="0">
+                    <thead class="cache-item-thead">
+                      <tr>
+                         
+                        <th>
+                        <span style="font-size:14px;font-weight:bold;color:#9D9DAD;">Key</span>
+                        </th>
+                        <th class="">
+                        <span style="font-size:14px;font-weight:bold;color:#9D9DAD;">Value</span>
+                        </th>
+                        <th class="table-TxtAlign-center">
+                        <span style="font-size:14px;font-weight:bold;color:#9D9DAD;">Action</span>
+                        </th>                     
+                      </tr>  
+                    </thead>
+
+                    <tbody class="cache-item-tbody">
+                      <tr ng-repeat="eachItem in cacheItemsList">                       
+                        <td width="39%">
+                          <div class="cache-key-display" style="padding-top:3px;padding-left:1px;">
+                            {{eachItem.key}}
+                          </div>                     
+                        </td> 
+
+                        <td class="" width="40%">
+                          <div class="cache-value-display" style="padding-top:3px;padding-left:1px;" ng-show="!showInputForEdit[$index]" ng-dblclick="initEditItem(eachItem)">
+                            {{eachItem.value}}
+                          </div>
+
+                          <div ng-show="showInputForEdit[$index]" class="cache-value-edit">
+                            <input type="text" ng-model="editableItem[$index]"  ng-blur="updateItem(eachItem)">
+                          </div>
+                        </td>
+
+                        <td class="table-TxtAlign-center" width="18%">
+
+                          <!--Delete-->
+                          <div ng-show="!itemSpinner[$index] && !itemError[$index] && !itemSaved[$index]" style="width:100%;height:26px;cursor:pointer;" class="cache-item-delete" ng-click="deleteItem(eachItem)">
+                           <i class="icon ion-close-circled" style=""></i>
+                           <span style="">Delete</span>
+                          </div>
+
+                          <!--Spinner Delete/Editing-->
+                          <div ng-show="itemSpinner[$index] && !itemError[$index] && !itemSaved[$index]" style="width:100%;height:26px;cursor:pointer;" class="flex-general-column-wrapper-center">
+                            <i class="fa fa-spinner fa-spin" style="font-size:16px;"></i>
+                          </div>
+
+                          <!--Saved Tick-->
+                          <div ng-show="!itemSpinner[$index] && !itemError[$index] && itemSaved[$index]" style="width:100%;height:26px;cursor:pointer;" class="sno-saved flex-general-column-wrapper-center">
+                            <i class="fa fa-check" style="font-size:16px;"></i>
+                          </div>
+
+                          <!--Error-->
+                          <div ng-show="!itemSpinner[$index] && itemError[$index] && !itemSaved[$index]" style="width:100%;height:26px;cursor:pointer;" infotooltipleft="{{itemError[$index]}}" class="sno-errorinfo flex-general-column-wrapper-center">
+                            <i class="fa fa-exclamation-triangle" style="font-size:16px;"></i>
+                          </div>
+
+                        </td>                                      
+                      </tr> 
+
+                    </tbody>
+
+                  </table>                                   
+
+                </div>
+
+                <div ng-show="itemsError || itemsLoading" class="spinners-errors-msgs flex-general-column-wrapper-center">
+                  <div ng-show="!itemsError && itemsLoading" style="">
+                    <i class="fa fa-spinner fa-spin" style="font-size:26px;color:#7c7c7c"></i>
+                  </div>                 
+
+                  <div ng-show="itemsError && !itemsLoading">
+                    <span style="color:#D60A00;font-size:16px;">{{itemsError}}</span>
+                  </div>
+                </div>
+
+                <div ng-show="!itemsError && !itemsLoading && cacheItemsList.length==0" class="spinners-errors-msgs flex-general-column-wrapper-center">
+                  <div>
+                    <span style="color:#DBD9D9;font-size:18px;font-weight:500;">No Items in cache</span>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+          <!--Absolute Load More items
+          <div class="cache-more-items-display">
+            <div class="flex-general-column-wrapper-center pull-right" style="width:57.7%;height:50px;">
+              <div class="flex-general-column-wrapper-center" style="background-color: rgba(227, 227, 227, 0.48);width:80.5%;height:100%;margin-left:-16px;">
+                <span style="font-size:14px;font-weight:700;"> Loading more..</span>
+              </div>
+            </div>
+          </div>
+          /Absolute Load More items-->
+        </div>
+      </div>
+    </div>
+  </div> 
+  <!--/Normal Display-->
+      
+</div>
+
+<!--Slack chat-->
+<a href="http://slack.cloudboost.io" target="_blank">
+  <div class="intercomm flex-general-column-wrapper-center">    
+    <i class="icon ion-ios-chatboxes" style="font-size:26px !important; color:white;margin-top:3px;"></i>
+  </div> 
+</a>
+<!--/Slack chat-->
+
+
+<!--Create Cache modal-->
+<div class="modal fade colored-header primary" id="md-createcachemodel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Create new cache</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">It makes your app faster...</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-bolt" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="cacheModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:cacheModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{cacheModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="cacheModalError=!cacheModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="newCacheName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Pick up a good name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button>        
+
+        <!--Create-->
+        <button type="button" ng-show="!createCacheSpinner" class="btn btn-primary" ng-click="createCache()" style="width:120px; border-radius:3px !important;">Create</button>        
+
+         <!--While Deleting-->
+        <button type="button" ng-show="createCacheSpinner" class="btn btn-primary" style="width:142px; border-radius:3px !important;"><i class="fa fa-spinner fa-spin"></i>&nbsp;Creating..</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Create Cache modal-->
+
+
+  
+<!--Delete Cache modal-->
+<div class="modal fade colored-header primary" id="md-deletecache" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#D60A00;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Delete cache</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">You're about delete</span>
+            <span style="font-size:14px;color:white;font-weight:700;">"{{deletableCache.name}}"</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#9b0601;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-bolt" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="cacheModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:cacheModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{cacheModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="cacheModalError=!cacheModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="confirmCacheName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Confirm cache name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button> 
+
+        <!--Disabled-->
+        <button type="button" ng-show="cacheModalError && !confirmSpinner" style="color:gray;cursor:pointer !important; width:124px;" class="btn">Delete Cache</button>
+
+        <!--Delete-->
+        <button type="button" ng-show="!confirmSpinner && !cacheModalError" ng-click="deleteCache()" class="btn" style="background-color:#D60A00; color:white;width:120px; border-radius:3px !important;">Delete Cache</button>  
+
+         <!--While Deleting-->
+        <button type="button" ng-show="confirmSpinner" class="btn" style="background-color:#D60A00;color:white;width:142px; border-radius:3px !important;"><i class="fa fa-spinner fa-spin"></i>&nbsp;Deleting Cache..</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Delete Cache modal-->
+
+ 
+
+<!--Clear Cache modal-->
+<div class="modal fade colored-header primary" id="md-clearcache" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#E8BA04;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Clear cache</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">You're about clear</span>
+            <span style="font-size:14px;color:white;font-weight:700;">"{{clearableCache.name}}"</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#826500;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-bolt" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="cacheModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:cacheModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{cacheModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="cacheModalError=!cacheModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="confirmCacheName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Confirm cache name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button> 
+
+        <!--Disabled-->
+        <button type="button" ng-show="cacheModalError && !confirmSpinner" style="color:gray;cursor:pointer !important; width:124px;" class="btn">Clear Cache</button>
+
+        <!--Clear-->
+        <button type="button" ng-show="!confirmSpinner && !cacheModalError" ng-click="clearCache()" class="btn" style="background-color:#E8BA04; color:white;width:120px; border-radius:3px !important;">Clear Cache</button>  
+
+         <!--While Deleting-->
+        <button type="button" ng-show="confirmSpinner" class="btn" style="background-color:#E8BA04;color:white;width:142px; border-radius:3px !important;"><i class="fa fa-spinner fa-spin"></i>&nbsp;Clearing Cache..</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Clear Cache modal-->

@@ -1,0 +1,830 @@
+
+<div class="queues-page" ng-init="init()">
+
+  <div class="row" ng-show="!firstVisit"> 
+     <div class="apps-queues-panel-wrapper">
+      <div style="height:50px;width:100%;border-bottom:1px solid #DEE0E0;">
+        <!--Search Cache-->
+        <div class="cache-search-wrapper pull-left">        
+          <div class="flex-general-row-wrapper cache-search-container">
+            <!--Search Icon-->           
+            <i class="icon ion-ios-search-strong" style="font-size: 24px;margin-top: -2px !important;color:#bcb4b0;" ></i>     
+
+            <!--Search Input-->
+            <div class=""  style="height:100%;width:88.5%;margin-left:4px;">
+              <input type="text" class="cache-search-input" style="width:100%;height:100%;" placeholder="Search Queues" ng-model="searchThisName.name">
+            </div>        
+
+          </div> 
+        </div>
+        <!--/Search Cache-->
+
+        <!--Create Cache-->
+        <div class="pull-right flex-general-column-wrapper-center" style="border-left:1px solid #DEE0E0;width:34%;background-color:#EDEDEF;">
+          <div class="flex-general-row-wrapper" style="padding-top:6px;cursor:pointer !important;" ng-click="initCreateQueue()">
+
+            <div class=""  style="margin-top:5px;margin-left:3px;">
+              <div class="flex-general-column-wrapper-center" style="height:27px;width:27px;">
+                <i class="icon ion-plus" style="font-size: 20px;margin-top: 0px !important;color:#8F8F91;" ></i>
+              </div>
+            </div>
+
+            <div class=""  style="height:100%;">
+              <div class="" style="height:34px;margin-top:9px;">
+                <span style="font-size:14px;color:#8F8F91;">Create Queue</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--/Create Cache-->
+      </div>
+      
+      <div class="cache-list-wrapper">
+        <div class="cache-list-container" malihuscrollbar-for-popup> 
+
+          <!--Info-->
+          <div ng-repeat="eachQ in queueList | filter:searchThisName" ng-click="openQueueDetails(eachQ)" class="each-queue-wrapper flex-general-row-wrapper" ng-class="{activeQueue:selectedQueue[eachQ.id]}">
+
+            <div class="cache-resembler-wrapper flex-general-column-wrapper-center pull-left">
+              <div class="flex-general-column-wrapper-center cache-resembler-contain" style="">
+                <i class="fa fa-exchange" style=""></i>
+              </div>
+            </div>
+
+            <div class="cache-app-name-wrapper pull-left" style="margin-top:2px;">
+              <div>
+                <span class="mycache-name" style="">{{eachQ.name | characters:24}}</span>
+              </div>
+
+              <div class="flex-general-row-wrapper" style="margin-left:5px;">
+
+                <div class="flex-general-row-wrapper">
+                  <div>
+                    <span class="cache-size-label" style="">QUEUE SIZE:</span>
+                  </div>
+                  <div>
+                    <span class="cache-size-val" style="">{{queueSizes[$index]}}</span>
+                  </div>
+                </div>               
+
+              </div>              
+            </div>
+
+            <div class="queue-app-buttons flex-general-row-wrapper pull-right" style=""> 
+                      
+              <div class="flex-general-column-wrapper-center queue-clear-btn-wrap" style="margin-left:12%;">
+                <button class="queue-clear-btn" style="" ng-click="editQueueACL(eachQ); $event.stopPropagation()">
+                  <div class="flex-general-row-wrapper">
+                      <div class="queue-clear-icon">
+                        <i class="icon ion-locked" style=""></i>
+                      </div>
+                      <div class="queue-clear-txt">
+                        <span>ACL</span>
+                      </div>
+                  </div>                 
+                </button>
+              </div>
+
+              <div class="flex-general-column-wrapper-center queue-del-btn-wrap" style="">
+                <button class="queue-del-btn" style="" ng-click="initDeleteQueue(eachQ); $event.stopPropagation()">
+                  <div class="flex-general-row-wrapper">
+                      <div class="queue-del-icon">
+                        <i class="icon ion-ios-trash" style=""></i>
+                      </div>
+                      <div class="queue-del-txt">
+                        <span>Delete</span>
+                      </div>
+                  </div>                 
+                </button>                
+              </div>
+
+            </div>
+
+
+          </div> 
+          <!--/End info-->  
+
+        </div>
+      </div>            
+
+    </div>
+  </div>  
+
+  <!--First Display-->
+  <div class="row" ng-show="firstVisit">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="flex-general-column-wrapper-center first-visitto-cache" style="">
+
+        <div style="width:46%;height: 340px;border:1px solid #C0D0DB;border-radius: 2px;background-color: white;padding:20px;">
+
+            <div class="cf" style="height: 25%;width: 100%;">
+
+              <div class="pull-left" class="flex-general-row-wrapper" style="width:60%;height: 100%;">
+
+                <div style="width:100%;height: 100%;" class="flex-general-row-wrapper">
+                  <div style="width:23%;height:100%;" class="flex-general-column-wrapper-center">
+                      <div class="flex-general-column-wrapper-center" style="width:100%;height:100%;border-radius: 50px;background-color: #52d9a2;">
+                        <i class="fa fa-exchange" style="color:white;font-size: 30px;"></i>
+                      </div>
+                  </div>
+
+                  <div style="width:60%;height:100%;" class="solo-vertical-center">
+                      <div class="" style="padding-left: 5px;">
+                        <div>
+                          <span style="font-size: 18px;font-weight: 600;">CloudBoost Queue</span>
+                        </div>
+                        <div>
+                          <span style="font-size: 14px;">Connect micro services with queue</span>
+                        </div>                 
+                      </div>
+                      
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="pull-right" style="width:28%;height: 100%;">
+                  <div style="width:100%;height: 100%;" class="flex-general-row-wrapper">
+                    <div style="width:100%;height:54%;margin-top: 2px;"> 
+                      <button style="width: 100%;height: 100%;background-color: #1280E0;color:white;font-size: 14px;border-radius:4px;" class="default-inputfield" ng-click="initCreateQueue()">Create Queue</button>                   
+                    </div>
+
+                    <div style="width: 100%;" class="solo-horizontal-center">
+                      <span></span>
+                    </div>
+                  </div>            
+              </div>
+
+            </div>
+
+            <div style="height: 67%;width: 100%;margin-top: 20px;" class="flex-general-row-wrapper">
+
+              <div style="width:60%;height: 100%;padding: 20px;background-color: #F7FAFC;">
+                <div style="width: 100%;height: 80%;" class="">
+                  <span style="font-size: 18px;font-weight: 500;">
+                  Queue helps you to glue different pieces and services of your app and make them work together. Create your first queue today.
+                  </span>
+                </div>
+
+                <div style="width: 100%;height: 10%;margin-top:17px;" class="flex-general-row-wrapper">
+                  <div>
+                    <span>
+                      <i class="icon ion-ios-book" style="color:#1280E0; font-size: 16px;"></i>
+                    </span>
+                    <span>
+                      <a href="https://tutorials.cloudboost.io/en/queues/basicqueues" style="color:#1280E0; font-size: 14px;" target="_blank">Take the Tutorial</a>
+                    </span>
+                  </div>
+
+                  <div style="margin-left: 10px;">
+                  
+                  </div>
+                </div>
+              </div>
+
+              <div style="width:38%;height: 100%;background-color: #F7FAFC;" class="solo-vertical-center">
+                <img src="assets/images/queue-cog.png" style="margin-left:15px;">
+              </div>
+            </div>
+          
+          </div>
+
+      </div>
+    </div>
+  </div> 
+  <!--/First Display-->
+
+  <!--Normal Display-->
+  <div class="row" ng-show="activatedQueue.length>0 && !firstVisit">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="cf" style="width:100%;height:auto;">
+        <div class="queue-items-details">
+
+          <div class="adding-queue-wrapper flex-general-column-wrapper-center">
+            <div class="cf" style="width:86.4%;">
+              <div class="adding-queue-btn-wrapper pull-left">               
+                <button style="" ng-click="initAddNewMessage()">
+                <i class="icon ion-plus" style="font-size: 18px;margin-top: 0px !important;color:#8F8F91;" ></i>&nbsp;
+                Add Message
+                </button>
+              </div> 
+            </div>            
+          </div>
+
+          <div class="listing-cache-wrapper">
+            <div class="" style="width:82%;margin:0 auto;">
+
+                <div class="queue-item-table" ng-show="!messagesError && !messagesLoading && queueMessagesList && queueMessagesList.length>0">
+
+                  <div ng-repeat="eachMsg in queueMessagesList" class="eachmsg-container" style="width:100%;">
+
+                    <!--Each Message Block-->
+                    <div class="each-queue-msg-block card-3">
+                      <div class="cf" style="margin-top:6px;margin-left:10px;">
+                        <div class="pull-left" style="color: #939393;">
+                          MESSAGE:
+                        </div> 
+
+                        <div class="pull-right flex-general-row-wrapper" style="margin-right:10px;">
+                          <div>
+                            <i class="fa fa-pencil" style="font-size:14px;color: #939393;" ng-click="initEditMessage(eachMsg)"></i>
+                          </div>
+                          <div style="margin-left:14px;">
+                            <i class="fa fa-trash-o" style="font-size:14px;color: #939393;" ng-click="initDeleteMessage(eachMsg)"></i>
+                          </div>
+                        </div> 
+
+                      </div> 
+
+                      <div class="flex-general-row-wrapper">
+                         <div class="msg-content-wrapper">
+
+                          <div class="queue-msgs-just-display" style="font-size:12px;">
+                            {{eachMsg.message | stringifyjson | characters:70}}                   
+                          </div>
+
+                        </div>
+                      </div>                   
+
+                      <div class="flex-general-row-wrapper" style="margin-bottom:6px;margin-left:10px;">
+                        <div style="color: #939393;">
+                          TIMEOUT:
+                        </div>
+                         <div style="font-size:14px;margin-top:-2px;margin-left:1px;">
+                          {{eachMsg.timeout}}
+                        </div>
+
+                        <div ng-show="eachMsg.delay" style="margin-left:30px;color: #939393;">
+                          DELAY:
+                        </div>
+                         <div ng-show="eachMsg.delay" style="font-size:14px;margin-top:-2px;margin-left:1px;">
+                          {{eachMsg.delay}}
+                        </div>
+
+                        <div ng-show="eachMsg.expires" style="margin-left:30px;color: #939393;">
+                          EXPIRES:
+                        </div>
+                        <div ng-show="eachMsg.expires" style="font-size:14px;margin-left:1px;margin-top:-2px;">
+                          {{eachMsg.expires  | date:'medium'}}
+                        </div>
+                      </div>
+
+                    </div>
+                    <!--/Each Message Block-->
+
+                  </div>
+                  
+                </div>
+
+                <div ng-show="messagesError || messagesLoading" class="queues-spinners-errors-msgs flex-general-column-wrapper-center">
+                  <div ng-show="!messagesError && messagesLoading" style="">
+                    <i class="fa fa-spinner fa-spin" style="font-size:26px;color:#7c7c7c"></i>
+                  </div>                 
+
+                  <div ng-show="messagesError && !messagesLoading">
+                    <span style="color:#D60A00;font-size:16px;">{{messagesError}}</span>
+                  </div>
+                </div>
+
+                <div ng-show="!messagesError && !messagesLoading && (!queueMessagesList || queueMessagesList.length==0)" class="queues-spinners-errors-msgs flex-general-column-wrapper-center">
+                  <div>
+                    <span style="color:#DBD9D9;font-size:18px;font-weight:700;">No messages in queue</span>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div> 
+  <!--/Normal Display-->      
+</div>
+
+<!--Slack chat-->
+<a href="http://slack.cloudboost.io" target="_blank">
+    <div class="intercomm flex-general-column-wrapper-center">    
+        <i class="icon ion-ios-chatboxes" style="font-size:26px !important; color:white;margin-top:3px;"></i>
+    </div> 
+</a>
+<!--/Slack chat-->
+
+
+<!--Create Queue modal-->
+<div class="modal fade colored-header primary" id="md-createqueuemodel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Create new queue</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">Connect your micro services with queues</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-exchange" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="queueModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:queueModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{queueModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="queueModalError=!queueModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="newQueueName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Pick up a good name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button>        
+
+        <!--Create-->
+        <button type="button" ng-show="!creatingQueue" class="btn btn-primary" ng-click="createQueue()" style="width:120px; border-radius:3px !important;">Create</button>        
+
+         <!--While Deleting-->
+        <button type="button" ng-show="creatingQueue" class="btn btn-primary" style="width:142px; border-radius:3px !important;"><i class="fa fa-spinner fa-spin"></i>&nbsp;Creating..</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Create Queue modal-->
+
+
+<!--Delete Queue modal-->
+<div class="modal fade colored-header primary" id="md-deletequeue" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#D60A00;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Delete queue</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">You're about delete</span>
+            <span style="font-size:14px;color:white;font-weight:700;">"{{deletableQueue.name}}"</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#9b0601;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-exchange" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="queueModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:queueModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{queueModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="queueModalError=!queueModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="confirmQueueName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Confirm queue name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button> 
+
+        <!--Disabled-->
+        <button type="button" ng-show="queueModalError && !confirmSpinner" style="color:gray;cursor:pointer !important; width:124px;" class="btn">Delete Queue</button>
+
+        <!--Delete-->
+        <button type="button" ng-show="!confirmSpinner && !queueModalError" ng-click="deleteQueue()" class="btn" style="background-color:#D60A00; color:white;width:120px; border-radius:3px !important;">Delete Queue</button>  
+
+         <!--While Deleting-->
+        <button type="button" ng-show="confirmSpinner" class="btn" style="background-color:#D60A00;color:white;width:142px; border-radius:3px !important;"><i class="fa fa-spinner fa-spin"></i>&nbsp;Deleting Queue..</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Delete Queue modal-->
+
+<!--Add New Msg modal-->
+<div class="modal fade colored-header primary" id="md-addnewmsg" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Add new message</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">Insert a new message</span>            
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-exchange" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="queueModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:queueModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{queueModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="queueModalError=!queueModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div class="flex-general-column-wrapper-center" style="width:100%;">
+          
+          <div class="" style="width:80%;">
+
+            <div class="" style="width:100%;height:24px;">
+              <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">MESSAGE DATATYPE</p>              
+            </div>
+
+            <div class="" style="width:100%;height:29px;">
+              <select class="default-inputfield" style="margin-left:-138.5px; width:160px; height: 25px; border:1px solid #CECECE;" ng-model="queueActiveTab">
+                <option ng-repeat="dType in queueDataTypes" ng-selected="dType==queueActiveTab">{{dType}}</option>
+              </select>                          
+            </div>
+
+            <div class="" style="width:100%;height:29px;margin-top:10px;">
+              <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">MESSAGE</p>              
+            </div>           
+
+            <div class="" style="width:100%;margin-top:3.5px;"> 
+              
+              <div ng-show="queueActiveTab=='Text'" class="" style="width:100%;border:2px solid #D6D6D6;border-radius:4px;">
+                <textarea rows="4" cols="50" ng-model="newMessage.msg" class="defaultInput-txt" style="width:100%;height:120px;resize: none;"></textarea>                  
+              </div>
+
+              <div ng-show="queueActiveTab=='JSON'" class="" style="width:100%;border:2px solid #D6D6D6;border-radius:4px;">               
+                <div ui-ace="{ mode: 'json', theme: 'chrome' }" ng-model="newMessage.msg"  style="width:100%;margin-top:-1px !important;">
+                </div>
+              </div>             
+
+            </div>
+          </div>
+
+          <div class="" style="width:80%;height:25px;margin-top:4px;">
+            <div class="flex-general-row-wrapper" style="width:40%;cursor:pointer;" ng-click="toggleMsgAdvanceOptions()">
+              <p class="pull-left" style="color:#A3A3A3;">
+                <i class="icon ion-plus-circled" style="font-size:16px;"></i>               
+              </p> 
+              <p ng-show="!openMsgAdvanceOptions" class="pull-left" style="font-size:12px;color:#A3A3A3;margin-top:1px;margin-left:4px;">                
+                SHOW ADVANCE OPTIONS
+              </p>
+              <p ng-show="openMsgAdvanceOptions" class="pull-left" style="font-size:12px;color:#A3A3A3;margin-top:1px;margin-left:4px;">                
+                HIDE ADVANCE OPTIONS..
+              </p>             
+            </div> 
+          </div>
+
+          <!--Advance Options-->
+          <div ng-show="openMsgAdvanceOptions" style="width:100%;" class="flex-general-column-wrapper-center">
+            <div class="" style="width:80%;margin-top:5px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">TIMEOUT</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" ng-model="newMessage.timeout" class="defaultInput-txt" style="width:100%;height:90%;">
+                </div>
+              </div>
+            </div>
+
+            <div class="" style="width:80%;margin-top:7px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">DELAY</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" ng-model="newMessage.delay" class="defaultInput-txt" style="width:100%;height:90%;">
+                </div>
+              </div>
+            </div>
+
+            <div class="" style="width:80%;margin-top:7px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">EXPIRES</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" ng-model="newMessage.expires" datetimepicker class="defaultInput-txt" style="width:100%;height:90%;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Advance Options-->
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button>        
+
+        <!--Disabled-->
+        <button type="button" ng-show="queueModalError && !addMsgSpinner" style="color:gray;cursor:pointer !important; width:125px;" class="btn">Add Message</button>
+
+        <!--Add-->
+        <button ng-show="!addMsgSpinner && !queueModalError" type="button" class="btn btn-primary" style="width:125px; border-radius:3px !important;" ng-click="addNewMessage()">Add Message</button>
+
+        <!--While Adding-->
+        <button ng-show="addMsgSpinner && !queueModalError" type="button" class="btn btn-primary" style="width:140px; border-radius:3px !important;" ><i class="fa fa-spinner fa-spin"></i>&nbsp;Adding Message</button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Add New Msg modal-->
+
+
+<!--Edit Msg modal-->
+<div class="modal fade colored-header primary" id="md-editmsg" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Edit message</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">Modify your message</span>            
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-exchange" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="queueModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:queueModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{queueModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="queueModalError=!queueModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div class="flex-general-column-wrapper-center" style="width:100%;">
+          
+          <div class="" style="width:80%;">
+
+            <div class="" style="width:100%;height:24px;">
+              <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">MESSAGE DATATYPE</p>              
+            </div>
+
+            <div class="" style="width:100%;height:29px;">
+              <select class="default-inputfield" style="margin-left:-138.5px; width:160px; height: 25px; border:1px solid #CECECE;" ng-model="queueActiveTab">
+                <option ng-repeat="dType in queueDataTypes" ng-selected="dType==queueActiveTab">{{dType}}</option>
+              </select>                          
+            </div>
+
+            <div class="" style="width:100%;height:29px;margin-top:10px;">
+              <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">MESSAGE</p>              
+            </div>            
+
+            <div class="" style="width:100%;margin-top:3.5px;"> 
+              
+              <div ng-show="queueActiveTab=='Text'" class="" style="width:100%;border:2px solid #D6D6D6;border-radius:4px;">
+                <textarea rows="4" cols="50" ng-model="requestedMessage.message" class="defaultInput-txt" style="width:100%;height:120px;resize: none;"></textarea>                  
+              </div>
+
+              <div ng-show="queueActiveTab=='JSON'" class="" style="width:100%;border:2px solid #D6D6D6;border-radius:4px;">              
+                <div ui-ace="{ mode: 'json', theme: 'chrome' }" ng-model="requestedMessage.message"  style="width:100%;margin-top:-1px !important;">
+                </div>
+              </div>             
+
+            </div>
+
+          </div>          
+
+          <!--Advance Options-->
+          <div style="width:100%;margin-top:3px;" class="flex-general-column-wrapper-center">
+            <div class="" style="width:80%;margin-top:5px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">TIMEOUT</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" class="defaultInput-txt" ng-model="requestedMessage.timeout" style="width:100%;height:90%;">
+                </div>
+              </div>
+            </div>
+
+            <div class="" style="width:80%;margin-top:7px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">DELAY</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" class="defaultInput-txt" ng-model="requestedSplDelay" style="width:100%;height:90%;">
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="" style="width:80%;margin-top:7px;">
+              <div class="" style="width:13.5%;height:29px;">
+                <p class="pull-left" style="font-size:14px;color:gray;font-weight:bold;">EXPIRES</p>              
+              </div> 
+
+              <div class="" style="width:100%;">           
+                <div class="" style="width:100%;height:29px;border:2px solid #D6D6D6;border-radius:4px;">
+                  <input type="text" datetimepicker class="defaultInput-txt" ng-model="requestedMessage.expires" style="width:100%;height:90%;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Advance Options-->
+
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button>              
+
+        <!--Disabled-->
+        <button type="button" ng-show="queueModalError && !editMsgSpinner" style="color:gray;cursor:pointer !important; width:125px;" class="btn">Edit Message</button>
+
+        <!--Add-->
+        <button ng-show="!editMsgSpinner && !queueModalError" type="button" class="btn btn-primary" style="width:125px; border-radius:3px !important;" ng-click="editMessage()">Edit Message</button>
+
+        <!--While Adding-->
+        <button ng-show="editMsgSpinner && !queueModalError" type="button" class="btn btn-primary" style="width:140px; border-radius:3px !important;" ><i class="fa fa-spinner fa-spin"></i>&nbsp;Updating</button>   
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Edit Msg modal-->
+
+
+<!--Delete Message modal-->
+<div class="modal fade colored-header primary" id="md-deletemsg" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#D60A00;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Delete message</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">You're about delete message</span>            
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#9b0601;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-exchange" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <!--Saving Errors--> 
+      <div style="width:100%;">
+        <div  ng-show="queueModalError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:queueModalError}" class="fadeIn">
+
+          <div class="pull-left" style="padding-top:1px;">                
+            <span>{{queueModalError}}</span>
+          </div>
+
+          <div class="pull-right" ng-click="queueModalError=!queueModalError">
+            <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+          </div>  
+
+        </div>  
+      </div>  
+      <!--/Saving Errors-->
+      
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:90%;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <span style="font-size:16px;">Are you sure you want to delete this message?</span>
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div>  
+
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Cancel</button> 
+
+        <!--Disabled-->
+        <button type="button" ng-show="queueModalError && !deleteMsgSpinner" style="color:gray;cursor:pointer !important; width:124px;" class="btn">Yes,Continue</button>
+
+        <!--Delete-->
+        <button type="button" ng-show="!deleteMsgSpinner && !queueModalError" ng-click="deleteMessage()" class="btn" style="background-color:#D60A00; color:white;width:120px; border-radius:3px !important;">Yes,Continue</button>  
+
+         <!--While Deleting-->
+        <button type="button" ng-show="deleteMsgSpinner" class="btn" style="background-color:#D60A00;color:white;width:142px; border-radius:3px !important;">
+          <i class="fa fa-spinner fa-spin"></i>&nbsp;Deleting Message..
+        </button>  
+ 
+      </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->   
+<!--/Delete Message modal-->
+  
+<!--ACL Directive -->
+<div class="modal fade colored-header danger" id="md-queueaclviewer" tabindex="-1" role="dialog">
+  <cb-acl save="saveQueueACL(cbaclobject)"></cb-acl>
+</div> 
+<!--/ACL Directive -->  

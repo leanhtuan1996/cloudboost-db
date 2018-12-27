@@ -1,0 +1,101 @@
+<div class="modal-dialog">
+  <div class="modal-content">   
+
+    <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+      <div class="pull-left" style="padding-left:8px;">
+        <div>
+          <span style="font-size:22px;color:white;">Geo Points</span>
+        </div>
+
+        <div>
+          <span style="font-size:14px;color:white;">Save your important locations easily.</span>
+        </div>
+
+      </div> 
+      <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+        <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+          <i class="fa fa-map-marker" style="font-size:30px;color:white;"></i>
+        </div>
+      </div>         
+    </div>
+
+    <!--Saving Errors--> 
+    <div style="width:100%;">
+      <div ng-show="geopointEditError" style="width:100%;height:30px;background-color:#C40101;color:white;padding-left:5px;padding-right:5px;padding-top:3.5px;" ng-class="{animated:geopointEditError}" class="fadeIn">
+
+        <div class="pull-left" style="padding-top:1px;">                
+          <span>{{geopointEditError}}</span>
+        </div>
+
+        <div class="pull-right" ng-click="geopointEditError=!geopointEditError">
+          <i class="icon ion-android-close" style="font-size:16px;color:white;"></i>
+        </div>  
+
+      </div>  
+    </div>  
+    <!--/Saving Errors-->
+
+
+    <div style="border-top:1px solid #dddbdb;">
+      <form role="form" name="geoPointForm" ng-submit="setAndSaveGeopoint(geoPointForm.$valid)">
+
+        <div class="madd-geo-wrapper">            
+          <div class="geopoint-list-wrapper">
+
+              <div class="geo-point-add-remv" style="width:100%;">
+                <div class="flex-general-row-wrapper" style="width:100%;"> 
+
+                  <div style="height: 90px;width:55%;padding-left: 20px;padding-top:15px;">                    
+                    <div>
+                      <span style="font-size: 20px;">Longitude</span>
+                    </div>
+
+                    <div>
+                      <span style="color:#BABABA;">Longitude must be range of -180 to 180</span>
+                    </div>
+
+                  </div>
+
+                  <div class="solo-vertical-center" style="height: 90px;background-color:#F2F8FF;width:44.99%;padding-left:10px;padding-right: 10px;">
+                    <input type="text" ng-model="editableGeopoint.longitude"  placeholder="Enter Longitude" minlength="-180" maxlength="180" required style="width:100%;height: 36px;background-color: transparent;font-size: 20px;" class="default-inputfield">
+                  </div>               
+
+                </div> 
+
+                 <div class="flex-general-row-wrapper" style="width:100%;border:1px solid #E8E8E8;"> 
+
+                  <div style="height: 90px;width:55%;padding-left: 20px;padding-top:15px;">                    
+                    <div>
+                      <span style="font-size: 20px;">Latitude</span>
+                    </div>
+
+                    <div>
+                      <span style="color:#BABABA;">Latitude must be range of -90 to 90</span>
+                    </div>
+
+                  </div>
+
+                  <div class="solo-vertical-center" style="height: 90px;background-color:#F2F8FF;width:44.99%;padding-left:10px;padding-right: 10px;">
+                    <input type="text" ng-model="editableGeopoint.latitude"  placeholder="Enter Latitude" minlength="-90" maxlength="90" required style="width:100%;height: 36px;background-color: transparent;font-size: 20px;" class="default-inputfield">
+                  </div>               
+
+                </div>
+              </div>
+              
+          </div> 
+        </div>             
+
+        <div class="modal-footer">        
+          <button type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal">Close</button>
+          <!--Disabled Save-->
+          <button type="submit" ng-show="geopointEditError"  class="btn  cb-modal-default-btn" style="color:gray !important;">Save</button> 
+
+          <!--Enabled Save-->
+          <button type="submit" ng-show="!geopointEditError" class="btn btn-primary cb-modal-default-btn" >Save</button>
+        </div>
+
+    </form>
+    </div>        
+
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

@@ -1,0 +1,13 @@
+
+.push-browser-parent{
+	height: 89vh;
+	width: 99.9%;
+	overflow-y: scroll;
+	background-color: #FDFAFB;
+}
+
+.push-box{
+	width: 75%;
+	height: auto;	
+}
+

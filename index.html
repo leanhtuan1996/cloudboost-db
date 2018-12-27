@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="CloudBoostDashboard">
+
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/images/icon.png">
+	<title>CloudBoost Dashboard</title> 
+ 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	
+  <!-- Fonts -->
+  <link rel="stylesheet" href="assets/fonts/font-awesome-4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+  
+  <!-- Kendo -->
+  <link href="assets/css/kendo.common.min.css" rel="stylesheet">    
+  <link href="assets/css/kendo.default.min.css" rel="stylesheet">
+
+  <!-- Malihu scrollbar -->
+  <link href="assets/js/malihu/jquery.mCustomScrollbar.css" rel="stylesheet"/>
+
+  <!-- Notification -->
+  <link href="assets/js/AmaranJS/dist/css/amaran.min.css" rel="stylesheet"/>
+
+  <!-- Modal, stackbox and tooltip -->
+  <link href="assets/js/bootstrap-modal-master/css/bootstrap-modal.css" rel="stylesheet"/>
+  <link href="bower_components/stackbox/plugin/dist/jquery.stackbox.min.css" rel="stylesheet"/>
+  <link href="assets/js/tooltipster-master/css/tooltipster.css" rel="stylesheet"/>
+  <link href="assets/css/htmltooltip.css" rel="stylesheet">
+
+  <!-- Chart -->
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+
+  <link href="bower_components/animate-css/animate.min.css" rel="stylesheet" />
+  <link href="node_modules/ng-prettyjson/dist/ng-prettyjson.min.css" rel="stylesheet"/>      
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   
+  <link rel="stylesheet" href="bower_components/datetimepicker/jquery.datetimepicker.css">  
+  <link rel="stylesheet" href="bower_components/angular-ui-switch/angular-ui-switch.min.css"/> 
+  <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css"/> 
+  <link rel="stylesheet" href="bower_components/angular-color-picker/dist/angularjs-color-picker.min.css"/>
+  <link rel="stylesheet" href="bower_components/angular-color-picker/dist/themes/angularjs-color-picker-bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/monokai.css">  
+
+  <!-- CB Custom -->
+	<link href="assets/css/style.css" rel="stylesheet"/>
+  <link href="assets/css/apps.css" rel="stylesheet"/>
+  <link href="assets/css/data.css" rel="stylesheet"/>
+  <link href="assets/css/queuescache.css" rel="stylesheet"/>
+  <link href="assets/css/profile.css" rel="stylesheet"/>
+  <link href="assets/css/users.css" rel="stylesheet"/>
+  <link href="assets/css/files.css" rel="stylesheet"/>
+  <link href="assets/css/push.css" rel="stylesheet"/>
+  <link href="assets/css/analytics.css" rel="stylesheet"/>
+  <link href="assets/css/appSettings.css" rel="stylesheet"/>
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+    for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+      mixpanel.init("be05a4d590e8bc9d5f2cd6b3b3ffb78b");</script>
+<!-- end Mixpanel -->
+
+<!--New Relic-->
+  <script type="text/javascript">
+window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o?o:e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=s(e),f=c.length,u=i(a,o,r),d=0;f>d;d++)c[d].apply(u,n);return u}function a(t,e){f[t]=s(t).concat(e)}function s(t){return f[t]||[]}function c(){return n(e)}var f={};return{on:a,emit:e,create:c,listeners:s,_events:f}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:22,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,s){try{c?c-=1:r("err",[s||new UncaughtException(t,e,n)])}catch(f){try{r("ierr",[f,(new Date).getTime(),!0])}catch(u){}}return"function"==typeof a?a.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=window.onerror,s=!1,c=0;t("loader").features.err=!0,t(5),window.onerror=e;try{throw new Error}catch(f){"stack"in f&&(t(1),t(2),"addEventListener"in window&&t(3),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&t(4),s=!0)}i.on("fn-start",function(){s&&(c+=1)}),i.on("fn-err",function(t,e,r){s&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){s&&!this.thrown&&c>0&&(c-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:9,2:8,3:6,4:10,5:3,6:23,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t){function e(){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var n=t("ee"),r=t("handle"),o=t(1),i=t(2);t("loader").features.stn=!0,t(3),n.on("fn-start",function(t){var e=t[0];e instanceof Event&&(this.bstStart=Date.now())}),n.on("fn-end",function(t,e){var n=t[0];n instanceof Event&&r("bst",[n,e,this.bstStart,Date.now()])}),o.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),o.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),i.on("fn-start",function(){this.bstStart=Date.now()}),i.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),n.on("pushState-start",function(){this.time=Date.now(),this.startPath=location.pathname+location.hash}),n.on("pushState-end",function(){r("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.addEventListener("webkitresourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1),window.performance.addEventListener("resourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1)),document.addEventListener("scroll",e,!1),document.addEventListener("keypress",e,!1),document.addEventListener("click",e,!1)}},{1:9,2:8,3:7,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],6:[function(t,e){function n(t){i.inPlace(t,["addEventListener","removeEventListener"],"-",r)}function r(t){return t[1]}var o=t("ee").create(),i=t(1)(o),a=t("gos");if(e.exports=o,n(window),"getPrototypeOf"in Object){for(var s=document;s&&!s.hasOwnProperty("addEventListener");)s=Object.getPrototypeOf(s);s&&n(s);for(var c=XMLHttpRequest.prototype;c&&!c.hasOwnProperty("addEventListener");)c=Object.getPrototypeOf(c);c&&n(c)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&n(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t){if(t[1]){var e=t[1];"function"==typeof e?this.wrapped=t[1]=a(e,"nr@wrapped",function(){return i(e,"fn-",null,e.name||"anonymous")}):"function"==typeof e.handleEvent&&i.inPlace(e,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:24,ee:"QJf3ax",gos:"7eSDFh"}],7:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window.history,["pushState"],"-")},{1:24,ee:"QJf3ax"}],8:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:24,ee:"QJf3ax"}],9:[function(t,e){function n(t,e,n){t[0]=o(t[0],"fn-",null,n)}var r=t("ee").create(),o=t(1)(r);e.exports=r,o.inPlace(window,["setTimeout","setInterval","setImmediate"],"setTimer-"),r.on("setTimer-start",n)},{1:24,ee:"QJf3ax"}],10:[function(t,e){function n(){f.inPlace(this,p,"fn-")}function r(t,e){f.inPlace(e,["onreadystatechange"],"fn-")}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),f=c(a),u=c(s),d=window.XMLHttpRequest,p=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[],e),u.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,f.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:6,2:24,ee:"QJf3ax"}],11:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var i=0;c>i;i++)t.removeEventListener(s[i],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var a=t.responseType,f="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,u=n(f);if(u&&(r.rxSize=u),this.sameOrigin){var d=t.getResponseHeader("X-NewRelic-App-Data");d&&(e.cat=d.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,o("xhr",[e,r,this.startTime])}}}function n(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function r(t,e){var n=i(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}if(window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)){t("loader").features.xhr=!0;var o=t("handle"),i=t(2),a=t("ee"),s=["load","error","abort","timeout"],c=s.length,f=t(1);t(4),t(3),a.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=e,this.ended=!1,this.xhrGuids={}}),a.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),a.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),a.on("send-xhr-start",function(t,e){var r=this.metrics,o=t[0],i=this;if(r&&o){var f=n(o);f&&(r.txSize=f)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{a.emit("internal-error",[n])}catch(r){}}};for(var u=0;c>u;u++)e.addEventListener(s[u],this.listener,!1)}),a.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),a.on("xhr-load-added",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),a.on("xhr-load-removed",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),a.on("addEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-added",[t[1],t[2]],e)}),a.on("removeEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-removed",[t[1],t[2]],e)}),a.on("fn-start",function(t,e,n){e instanceof XMLHttpRequest&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),a.on("fn-end",function(t,e){this.xhrCbStart&&a.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:12,3:10,4:6,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],12:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],13:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:22,2:23,handle:"D5DuLP"}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):void(r.q&&(r.q[t]||(r.q[t]=[]),r.q[t].push(e)))}var r=t("ee").create();e.exports=n,n.ee=r,r.q={}},{ee:"QJf3ax"}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],G9z0Bl:[function(t,e){function n(){var t=p.info=NREUM.info,e=f.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){e in t||(t[e]=n)});var n="https"===u.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=window,f=c.document;t(2);var u=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-686.min.js"},p=e.exports={offset:i(),origin:u,features:{}};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(f.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()])},{1:22,2:13,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],22:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],23:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],24:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@wrapper",a=Object.prototype.hasOwnProperty;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,f;try{i=this,n=o(arguments),s=r&&r(n,i)||{}}catch(d){u([d,"",[n,i,a],s])}c(e+"start",[n,i,a],s);try{return f=t.apply(i,n)}catch(p){throw c(e+"err",[n,i,p],s),p}finally{c(e+"end",[n,i,f],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=!0,f(t,nrWrapper),nrWrapper)}function s(t,r,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,f?s+o:o,i,s))}function c(e,n,r){try{t.emit(e,n,r)}catch(o){u([o,e,n,r])}}function f(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){u([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function u(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=s,e.flag=i,e}},{1:23,ee:"QJf3ax"}]},{},["G9z0Bl",4,11,5]);
+;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"6c668d5d5f",applicationID:"9340048",sa:1,agent:"js-agent.newrelic.com/nr-686.min.js"}
+</script>
+<!--/New Relic--> 
+
+<!--CloudBoost Javscript SDK-->
+<script type="text/javascript">
+  var fileref;
+  function loadjsfile(filepath){    
+    fileref=document.createElement('script');
+    fileref.setAttribute("type","text/javascript");
+    fileref.setAttribute("src", filepath);          
+  }
+
+  if(window.location.host.indexOf('localhost') > -1){
+    loadjsfile("assets/js/cloudboost.js");
+  }else{
+    loadjsfile("https://cloudboost.io/js-sdk/cloudboost.js");
+  }
+
+  document.getElementsByTagName("head")[0].appendChild(fileref)
+  
+</script>
+
+
+<!--/Heroku--> 
+
+<script src="https://s3.amazonaws.com/assets.heroku.com/boomerang/boomerang.js"></script>
+
+</head>
+
+<body class="animated" data-ng-controller="indexController">
+
+<div id="cl-wrapper">
+  <!--sidepanel-->
+  <div class="cl-sidebar" ng-show="!isFullScreen" style="padding-bottom: 0;">
+  <div class="cl-toggle"><i class="fa fa-bars"></i></div>
+    <div class="cl-navblock">
+      <div class="menu-space">
+        <div class="content" ng-class="{'marginTop30': (provider === 'heroku')}">
+          <a href="#/">
+          <!--SideBar Logo-->
+          <div style="height: 65px;" class="flex-general-column-wrapper-center">
+            <img src="assets/images/CbLogoIcon.png" style="height: 38px;width: 38px;">
+          </div>
+          <!--/SideBar Logo--> 
+          </a>          
+
+          <ul ng-if="user.isAdmin" class="cl-vnavigation" style="margin-top: 14px;">            
+
+            <li  ng-class="{'simplemenu-active':page=='admin'}"  htmltooltip data-tooltip="#admin-tooltip-html">
+              <!--Tooltip-body-->
+              <div id ="admin-tooltip-html" style="display:none;">
+                <div style="width:220px;padding-left: 15px;padding-right: 15px;padding-top: 8px;padding-bottom: 8px;">
+                  <div>
+                    <span style="font-weight: 700;">Admin</span>
+                  </div>
+
+                  <div>
+                    <span style="color:#81909E;font-size: 12px;">Manage your CloudBoost Cluster</span>
+                  </div>
+                </div>              
+              </div>
+              <!--/Tooltip-body-->
+
+              <a href="#/admin" style="margin-top: -18px;">
+                <div  style="width: 35px;" class="flex-general-column-wrapper-center">
+                  <i class="fa fa-users"></i>
+                </div>
+              </a>           
+            </li>            
+          </ul>
+          
+          <ul class="cl-vnavigation" style="">
+            <li ng-class="{'simplemenu-active':page=='apps'}" htmltooltip data-tooltip="#apps-tooltip-html">
+              <!--Tooltip-body-->
+              <div id ="apps-tooltip-html" style="display:none;">
+                <div style="width:150px;padding-left: 15px;padding-right: 15px;padding-top: 8px;padding-bottom: 8px;">
+                  <div>
+                    <span style="font-weight: 700;">Apps</span>
+                  </div>
+
+                  <div>
+                    <span style="color:#81909E;font-size: 12px;">Manage your Apps</span>
+                  </div>
+                </div>              
+              </div>
+              <!--/Tooltip-body-->
+
+              <a href="#/" style="margin-top: -18px;">
+                <div  style="width: 35px;" class="flex-general-column-wrapper-center">
+                  <i class="fa fa-th-large"></i>
+                </div>
+              </a>           
+            </li>
+                     
+          </ul> 
+
+          <div ng-show="showAppPanel" style="margin-top: 5px;margin-bottom: 17px;width: 100%;" class="flex-general-column-wrapper-center" >  
+            <div style="margin-top: 15px;height: 5px;width: 5px;border-radius: 20px;background-color: #191E23;">
+            </div>          
+          </div>
+
+          <div ng-show="showAppPanel" style="">
+            <ul class="cl-vnavigation">         
+
+              <li htmltooltip data-tooltip="#tables-tooltip-html">
+                <!--Tooltip-body-->
+                <div id ="tables-tooltip-html" style="display:none;">
+                  <div style="width:230px;padding-left: 15px;padding-right: 15px;padding-top: 8px;padding-bottom: 8px;">
+                    <div>
+                      <span style="font-weight: 700;">Tables</span>
+                    </div>
+
+                    <div>
+                      <span style="color:#81909E;font-size: 12px;">Store any kind of data with tables</span>
+                    </div>
+                  </div>              
+                </div>
+                <!--/Tooltip-body-->
+                <a href="#/{{currentProject.appId}}/table"  ng-click="toggleSideMenu()" style="margin-top: -18px;">
+                  <div  ng-class="{'menutable-active':page=='tableDesigner'}" style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu">
+                    <i class="fa fa-table" style="margin-top:2px;"></i>                  
+                  </div>
+                </a>   
+              </li>                           
+
+              <li  ng-show="currentProject" htmltooltip data-tooltip="#analytics-tooltip-html">
+                <!--Tooltip-body-->
+                <div id ="analytics-tooltip-html" style="display:none;">
+                  <div style="width:230px;padding-left: 15px;padding-right: 15px;padding-top: 8px;padding-bottom: 8px;">
+                    <div>
+                      <span style="font-weight: 700;">Analytics</span>
+                    </div>
+
+                    <div>
+                      <span style="color:#81909E;font-size: 12px;">See your CloudBoost usage and analytics</span>
+                    </div>
+                  </div>              
+                </div>
+                <!--/Tooltip-body-->
+                <a  href="#/{{currentProject.appId}}/analytics" style="margin-top: -18px;">
+                  <div  ng-class="{'menuanalytics-active':page=='analytics'}" style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu">
+                    <i class="icon ion-stats-bars" style="font-size: 20px !important;"></i>          
+                  </div>
+                </a>
+              </li> 
+
+              <li  htmltooltip data-tooltip="#settings-tooltip-html">
+                <!--Tooltip-body-->
+                <div id ="settings-tooltip-html" style="display:none;">
+                  <div style="width:230px;padding-left: 15px;padding-right: 15px;padding-top: 8px;padding-bottom: 8px;">
+                    <div>
+                      <span style="font-weight: 700;">Settings</span>
+                    </div>
+
+                    <div>
+                      <span style="color:#81909E;font-size: 12px;">Configure push notifications, emails, authentication and more.</span>
+                    </div>
+                  </div>              
+                </div>
+                <!--/Tooltip-body-->
+                <a  href="#/{{currentProject.appId}}/settings" style="margin-top: -18px;">
+                  <div  ng-class="{'menusettings-active':page=='appsettings'}" style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu">
+                    <i class="icon ion-gear-a" style="color:#1C2530;font-size: 20px !important;"></i>
+                  </div>
+                </a>
+              </li>
+
+              <li ng-mouseenter="xtramenu=true"  ng-mouseleave="xtramenu=false">               
+                <a style="margin-top: -18px;">
+                  <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu">
+                    <i class="icon ion-android-more-horizontal" style="color:#1C2530;font-size: 20px !important;"></i>
+                  </div>
+                </a>
+
+                <!--Extra Menu-->
+                <div ng-show="xtramenu" style="height: 280px;width: 280px; border-radius:4px; border:1px solid #495B70;background-color:#495B70;position: absolute;bottom:9px;left:99.6%;z-index:99999;">
+                  <div style="width: 100%; height: 100%; position: relative;">
+                    <!--Left arrow-->
+                    <div id="triangle-left" style="position: absolute;bottom: 27px;left: -10px;">
+                    </div>
+                    <!--Left arrow-->
+
+                    <!--Menu list-->
+                      <!--Each Menu-->                   
+                      <div ng-click="goToPage(currentProject.appId,'cache')" class="eachxtramenu-profile" style="margin-top: 10px;">                    
+                        
+                          <div class="flex-general-row-wrapper">
+                            <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu" ng-class="{'menucache-active':page=='cache'}">
+                              <span>                                
+                                <i class="fa fa-bolt" style="color:#495b70;font-size: 20px !important;"></i>
+                              </span>
+                            </div>
+                            <div style="margin-left: 5px;margin-top: 2px;">
+                              <div>
+                              <span style="font-weight: 700;font-size: 14px;color:white">Cache</span>
+                              </div>
+                              <div>
+                                <span style="color:#81909E;font-size: 12px;">Make your apps faster with cache</span>
+                              </div> 
+                            </div> 
+                          </div>                        
+                                           
+                      </div>
+                      <!--Each Menu-->
+
+                      <!--Each Menu-->                   
+                      <div ng-click="goToPage(currentProject.appId,'queues')" class="eachxtramenu-profile" style="margin-top: 10px;">                    
+                        
+                          <div class="flex-general-row-wrapper">
+                            <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu" ng-class="{'menuqueues-active':page=='queues'}">
+                              <span>
+                                <i class="fa fa-exchange" style="color:#495b70;font-size: 20px !important;"></i>
+                              </span>
+                            </div>
+                            <div style="margin-left: 5px;margin-top: 2px;">
+                              <div>
+                              <span style="font-weight: 700;font-size: 14px;color:white">Queues</span>
+                              </div>
+                              <div>
+                                <span style="color:#81909E;font-size: 12px;">Connect micro services with queues</span>
+                              </div> 
+                            </div> 
+                          </div>                        
+                                           
+                      </div>
+                      <!--Each Menu-->
+
+                      <!--Each Menu-->                   
+                      <div ng-click="goToPage(currentProject.appId,'files')" class="eachxtramenu-profile" style="margin-top: 10px;">                    
+                        
+                          <div class="flex-general-row-wrapper">
+                            <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu" ng-class="{'menuqueues-active':page=='files'}">
+                              <span>
+                                <i class="fa fa-file" style="color:#495b70;font-size: 20px !important;"></i>
+                              </span>
+                            </div>
+                            <div style="margin-left: 5px;margin-top: 2px;">
+                              <div>
+                              <span style="font-weight: 700;font-size: 14px;color:white">Files</span>
+                              </div>
+                              <div>
+                                <span style="color:#81909E;font-size: 12px;">Store and Stream files of any size.</span>
+                              </div> 
+                            </div> 
+                          </div>                        
+                                           
+                      </div>
+                      <!--Each Menu-->
+
+                      <!--Each Menu-->                   
+                      <div ng-click="goToPage(currentProject.appId,'push')" class="eachxtramenu-profile" style="margin-top: 10px;">                    
+                        
+                          <div class="flex-general-row-wrapper">
+                            <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu" ng-class="{'menupush-active':page=='push'}">
+                              <span>
+                                <i class="icon ion-ios-bell" style="color:#495b70;font-size: 20px !important;"></i>
+                              </span>
+                            </div>
+                            <div style="margin-left: 5px;margin-top: 2px;">
+                              <div>
+                              <span style="font-weight: 700;font-size: 14px;color:white">Push</span>
+                              </div>
+                              <div>
+                                <span style="color:#81909E;font-size: 12px;">Create a push compaign</span>
+                              </div> 
+                            </div> 
+                          </div>                        
+                                           
+                      </div>
+                      <!--Each Menu-->
+                      <!--Each Menu-->                   
+                      <div ng-click="goToPage(currentProject.appId,'email')" class="eachxtramenu-profile" style="margin-top: 10px;">                    
+                        
+                          <div class="flex-general-row-wrapper">
+                            <div style="height: 35px;width: 35px;border-radius: 25px;" class="flex-general-column-wrapper-center newsidebar-menu" ng-class="{'menupush-active':page=='email'}">
+                              <span>
+                                <i class="icon ion-email" style="color:#495b70;font-size: 20px !important;"></i>
+                              </span>
+                            </div>
+                            <div style="margin-left: 5px;margin-top: 2px;">
+                              <div>
+                              <span style="font-weight: 700;font-size: 14px;color:white">Email</span>
+                              </div>
+                              <div>
+                                <span style="color:#81909E;font-size: 12px;">Create an email campaign</span>
+                              </div> 
+                            </div> 
+                          </div>                        
+                                           
+                      </div>
+                      <!--Each Menu-->
+                    <!--/Menu list-->
+                  </div>
+                </div>
+                <!--/Extra Menu-->
+              </li>
+
+            </ul> 
+          </div> 
+
+          <div ng-show="showAppPanel" style="margin-top: 5px;margin-bottom: 17px;width: 100%;" class="flex-general-column-wrapper-center" >  
+            <div style="margin-top: 15px;height: 5px;width: 5px;border-radius: 20px;background-color: #191E23;">
+            </div>          
+          </div>         
+
+        </div>
+      </div>
+
+      <!--Special Menu-->
+      <div ng-show="!provider" class="text-right profile-main-sidemenu">                
+        <ul class="cl-vnavigation">         
+          <li ng-mouseenter="splmenu=true"  ng-mouseleave="splmenu=false" style="position: relative;">
+
+              <a href="#/profile" style="margin-top: -18px;">
+                <div  ng-class="{'menuspl-active':splmenu}" style="height: 35px;width: 35px;border-radius: 3px;overflow: hidden;" class="flex-general-column-wrapper-center newsidebar-splmenu">                  
+                  <img ng-show="!profilePic" src="assets/images/def2.png" style="height: 35px;width: 35px;">
+                  <img ng-show="profilePic" ng-src="{{profilePic.document.url}}" style="height: 35px;width: 35px;">
+                </div>  
+              </a> 
+
+              <!--Spl Menu-->
+              <div ng-show="splmenu" style="height: 100px;width: 180px; border-radius:4px; border:1px solid #495B70;background-color:#495B70;position: absolute;bottom:9px;left:99.6%;z-index:99;">
+                <div style="width: 100%; height: 100%; position: relative;">
+                  <!--Left arrow-->
+                  <div id="triangle-left" style="position: absolute;bottom: 27px;left: -10px;">
+                  </div>
+                  <!--Left arrow-->
+
+                  <!--Menu list-->
+                    <!--Each Menu-->                   
+                    <div class="eachsplmenu-profile" ng-click="goToProfile()" style="margin-top: 10px;">                    
+                      
+                        <div class="flex-general-row-wrapper">
+                          <div style="height: 20px;width: 20px;" class="flex-general-column-wrapper-center">
+                            <span>
+                              <i class="fa fa-user" aria-hidden="true" style="color:white;"></i>
+                            </span>
+                          </div>
+                          <div style="margin-left: 5px;margin-top: 2px;">
+                            <span style="font-weight: 700;font-size: 14px;color:white">Profile</span>
+                          </div>                          
+                        </div>
+
+                        <div class="flex-general-row-wrapper" style="">
+                          <div style="height: 20px;width: 20px;">
+                            <span></span>
+                          </div>
+                          <div style="margin-left: 5px;">
+                            <span style="color:#81909E;font-size: 12px;">Your profile settings</span>
+                          </div>
+                        </div> 
+                                         
+                    </div>
+                    <!--Each Menu-->
+
+                    <!--Each Menu-->                   
+                    <div class="eachsplmenu-profile" ng-click="logOut()">                    
+
+                        <div class="flex-general-row-wrapper" style="">
+                          <div style="height: 20px;width: 20px;" class="flex-general-column-wrapper-center">
+                            <span>
+                              <i class="fa fa-times" aria-hidden="true" style="color:white;"></i>
+                            </span>
+                          </div>
+                          <div style="margin-left: 5px;margin-top: 2px;">
+                            <span style="font-weight: 700;color:white;font-size: 14px;">Log out</span>
+                          </div>                          
+                        </div>                      
+                                           
+                    </div>
+                    <!--Each Menu-->
+                  <!--/Menu list-->
+                </div>
+              </div>
+              <!--/Spl Menu-->          
+          </li>          
+        </ul>
+      </div>
+      <!--Special Menu-->
+
+      <div class="text-right collapse-button" ng-show="false" style="padding:7px 9px;">        
+        <button id="sidebar-collapse" class="btn btn-default" style="">
+          <i style="color:#fff;" class="fa fa-angle-left"></i>
+        </button>
+      </div>
+
+    </div>  
+  </div>
+  <!--/sidepanel-->
+
+	<div  class="container-fluid" id="pcont">   
+   <!-- TOP NAVBAR -->
+  <div id="head-nav" class="navbar navbar-default" ng-show="!isFullScreen"  ng-class="{'marginTop30': (provider==='heroku')}">
+    <div class="container-fluid">
+      <div class="navbar-collapse">
+
+        <ul class="nav navbar-nav navbar-right user-nav">        
+
+          <!--Quickstart Book-->
+          <li class="profile_menu">
+
+            <a class="alto-menu" href="https://tutorials.cloudboost.io" target="blank">
+              <div  class="cf flex-general-row-wrapper">              
+              
+                <div class="">
+                  <i class="fa fa-book" style="color:#AAA4A4;"></i>
+                </div>
+                <div class="" style="margin-left:3px;">
+                  <span class="alto-menu-item">Quickstart</span>
+                </div>
+
+              </div>
+            </a>  
+
+          </li>
+          <!--/Quickstart Book-->        
+
+          <!--Notification BLOCK-->
+          <li class="dropdown profile_menu">
+
+            <a class="dropdown-toggle alto-menu notify-menu-anchor" data-toggle="dropdown" style="position:relative;margin-top:4px;" ng-click="updateNotificationsSeen()">              
+              <i class="fa fa-bell alto-menu-item"></i><span class="alto-menu-item" style="margin-left:2px;;">Notifications</span>  
+              <span ng-show="notifications | checkUnseenNotifications" class="label label-danger notifybubble">{{count=(notifications | countUnseenNotifications) }}</span>              
+            </a>
+
+            <!--Notification List-->
+            <ul class="dropdown-menu notify-list notifytoggle" ng-click="$event.stopPropagation()">          
+               <li><div class="up-arrow"></div></li>
+                <li>
+                  <p ng-show="!notifySpinner" style="font-weight:700;padding-left:10px;padding-top:7px;">You have {{notifications.length || 0}} pending tasks</p>
+                </li>
+
+                <li ng-show="!notifySpinner" style="margin-top:3px;" class="notification-torrent" lr-infinite-scroll="loadMoreNotifications">
+
+                  <div ng-show="!notifySpinner">
+                    <div ng-repeat="eachNotify in notifications | orderBy:'timestamp'" class="notify-bx cf">  
+                      <!--Icon-->                   
+                      <div class="pull-left" style="width:10%;">
+                        <i class="fa fa-cloud " style="font-size: 22px;margin-top: 3px;color:#4AA3DF"></i>
+                      </div>
+                      <!--/Icon-->
+
+                      <!--Content-->
+                      <div class="pull-left" style="width:85%; margin-left:10px;">
+                        <div class="task-cbdesc">
+                          <span ng-bind-html="renderHtml(eachNotify.text)"></span> 
+                          <span style="color:#74AFD6; font-style: italic;" data-livestamp="{{eachNotify.timestamp}}"></span>  
+                             
+                        </div>                    
+                        
+                        <!--Invited to app(Confirm)-->
+                        <div ng-show="eachNotify.notificationType=='confirm' && eachNotify.type=='invited-project'" class="cf" style="margin-top:6px;">
+                          <!--Accept-->
+                          <button ng-show="!acceptInvitationSpinner[$index]" class="notifybtn notify-accept" ng-click="addDeveloper($index,eachNotify)">Accept</button>
+                          <button ng-show="acceptInvitationSpinner[$index]" class="notifybtn notify-accept">
+                          <i class="fa fa-spinner fa-spin" style="font-size:12px;"></i>&nbsp;Accept</button>
+
+                          <!--Decline-->
+                          <button ng-show="!declineInvitationSpinner[$index]" class="notifybtn notify-decline" ng-click="removeUserFromInvited($index,eachNotify)">Decline</button>
+                          <button ng-show="declineInvitationSpinner[$index]" class="notifybtn notify-decline">
+                          <i class="fa fa-spinner fa-spin" style="font-size:12px;"></i>&nbsp;Decline</button>
+                        </div>
+                        
+                        <!--Inform App got Upgraded(Inform)-->
+                        <div  ng-show="eachNotify.notificationType=='inform' && (eachNotify.type=='app-upgraded' || eachNotify.type=='app-payment-stopped')" class="cf" style="margin-top:6px;">
+
+                          <!--Okay-->
+                          <button ng-show="!okGotItSpinner[$index]" class="notifybtn notify-accept" ng-click="removeNotification($index,eachNotify)">Okay</button>
+                          <button ng-show="okGotItSpinner[$index]" class="notifybtn notify-accept">
+                          <i class="fa fa-spinner fa-spin" style="font-size:12px;"></i>&nbsp;Okay</button>
+
+                        </div>
+
+                        <!--Ask to Upgrade app(payment)-->
+                        <div ng-show="eachNotify.notificationType=='payment' && eachNotify.type=='upgrade-app'" class="cf" style="margin-top:6px;">
+                        
+                          <!--Okay-->
+                          <button ng-show="!okGotItSpinner[$index]" class="notifybtn notify-accept" ng-click="removeNotification($index,eachNotify)">Okay</button>
+                          <button ng-show="okGotItSpinner[$index]" class="notifybtn notify-accept">
+                            <i class="fa fa-spinner fa-spin" style="font-size:12px;"></i>&nbsp;Okay
+                          </button>
+
+                        </div>
+
+                      </div>
+                      <!--/Content-->
+
+                    </div>
+
+                    <!--Loading more--> 
+                    <div ng-show="loadingMoreNotifications" class="flex-general-column-wrapper-center" style="width:100%;padding:8px;">
+                      <span  style="font-size:14px;font-weight:500;">
+                       Loading more..
+                      </span>
+                    </div> 
+                    <!--/Loading more-->
+                  </div>                 
+
+                </li>
+
+                <li ng-show="notifySpinner" style="margin-top:3px;margin-bottom:8px;">
+                  <!--Loading--> 
+                  <div  class="flex-general-column-wrapper-center" style="width:100%;padding:8px;height:40px">
+                    <span  style="font-size:14px;font-weight:500;">
+                     <i class="fa fa-spinner fa-spin" style="font-size:14px;"></i>
+                    </span>
+                  </div> 
+                  <!--/Loading-->
+                </li>
+                <li  style="margin-top:3px;margin-bottom:8px;">
+                  &nbsp;                 
+                </li>
+            </ul>
+            <!--/Notification List-->
+          </li>
+          <!--/Notification BLOCK-->
+         
+        </ul>
+
+        <ul class="nav navbar-nav not-nav">
+          <li class="button">
+            <h2>{{pageHeaderDisplay}}</h2>
+          </li>
+        </ul>
+        
+        </div><!--/.nav-collapse animate-collapse -->
+    </div>
+  </div>  
+  <!-- /TOP NAVBAR --> 
+
+  <ui-view></ui-view>   
+	
+</div>
+
+<!--Star Us on github-->
+<div ng-show="projectListObj.length==0 && starusGithubModel && page=='apps'" style="" class="flex-general-column-wrapper-center starus-github">
+  <div class="card-3" style="width:26.5%;height:83%;background-color:white;border-top:1px solid #F4F4F4;border-radius:5px;">
+
+    <!--Close-->
+    <div style="width:100%;height:4%;">
+      <div class="pull-right" style="margin-right:12px;margin-top:7px" ng-click="hideStarusGithubModel()">
+        <i class="icon ion-close" style="color:#CECECE; font-size:14px;"></i>
+      </div>
+    </div>
+    <!--/Close-->
+
+    <div style="width:100%;height:95.2%;padding:0px 8px 8px 8px;" class="flex-general-column-wrapper-center">
+      <div style="width:53px;height:53px;overflow:hidden;border-radius:4px;">
+        <img src="assets/images/CbLogoIcon.png" style="width:55px;height:55px;">
+      </div>
+      <div style="margin-top:20px;">
+        <span style="font-size:26px;">Welcome to CloudBoost</span>
+      </div>
+      <div style="margin-top:20px;">
+       <span style="font-size:14px;">Thank you for kicking tires and signing up. </span>
+      </div>
+      <div style="">
+        <span style="font-size:14px;">Do you know CloudBoost is open source too?</span>
+      </div>     
+
+      <div style="margin-top:30px;">
+       <span style="font-size:18px;font-weight:700">Support open source software!</span>
+      </div>
+      <div>
+        <span style="font-size:18px;font-weight:700">Star us on GitHub:</span>
+      </div>
+
+      <div style="margin-top:10px;">
+        <!-- Place this tag where you want the button to render. -->
+        <a aria-label="Star CloudBoost/cloudboost on GitHub" data-count-aria-label="# stargazers on GitHub" data-count-api="/repos/CloudBoost/cloudboost#stargazers_count" data-count-href="/CloudBoost/cloudboost/stargazers" data-style="mega" href="https://github.com/CloudBoost/cloudboost" class="github-button">Star</a>
+      </div>
+
+      <div style="margin-top:30px;">
+        <span style="font-size:20px;font-weight:700">News and support:</span>        
+      </div>
+
+      <div style="margin-top:10px;">
+        <a class="twitter-follow-button"
+            href="https://twitter.com/cloudboostio" data-size="large" data-show-count="false">
+            Follow @cloudboostio</a>
+      </div>      
+    </div>
+
+  </div>
+</div>
+<!--/Star Us on github-->
+
+<!-- Upgrade Card Modal -->
+<div class="modal fade colored-header" id="upgradeModal" tabindex="1" role="dialog">
+  <div class="modal-dialog upgradecustom-width">
+    <div class="modal-content flex-general-row-wrapper"> 
+
+      <div class="app-credicard-wrap" style="" ng-class="{carddetailsstep1:cardDetailsStep1,carddetailsstep2:cardDetailsStep2}">
+
+        <!--Slide1-->
+        <div class="wrap-cardDetailsStep1" ng-show="cardDetailsStep1">
+          <div class="intro">
+
+            <div style="width:100%;height:32px;" class="cf">
+              <div class="pull-left">
+                <span style="color:#71767C;font-size:18px;">Payment Information</span>
+              </div>
+              <div class="pull-right" style="">
+                <div style="margin-top:-8px;">
+                  <i class="icon ion-card" style="font-size:30px;color:#71767C;"></i>
+                </div>             
+              </div>
+            </div>
+
+            <div>
+              <span style="color:color:#71767C;">
+              <span style="font-weight:700;">100%</span> money back guarantee for the first 30 days on paid plans.
+              </span>
+            </div>
+
+          </div>
+
+          <div class="fields" style="margin-top:20px;">
+
+            <div class="flex-general-row-wrapper field-inn">
+
+              <div style="height:100%;width:13%;" class="solo-vertical-center">
+                <span style="font-size:14px;color:#C9C7C7;">Name</span>
+              </div>
+
+              <div style="height:100%;width:86.9%;" class="solo-vertical-center">
+                <input type="text" ng-model="cardDetails.billing.name" placeholder="Card holder name" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+            
+          </div>
+
+           <div class="fields" style="margin-top:20px;">
+
+            <div class="flex-general-row-wrapper field-inn">
+
+              <div style="height:100%;width:13%;" class="solo-vertical-center">
+                <span style="font-size:14px;color:#C9C7C7">card#</span>
+              </div>
+
+              <div style="height:100%;width:86.9%;" class="solo-vertical-center">
+                <input type="text" ng-model="cardDetails.number" placeholder="1234 5678 9326 7352" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+            
+          </div>
+
+
+          <div class="fields cf" style="margin-top:20px;">
+            <div class="pull-left" style="height:42px;width:27%;background-color:white;">
+              <select class="default-inputfield" ng-model="cardDetails.expMonth" style="height:100%;width:100%;font-size:16px;padding:2px;color:#7C7B7B">
+                  <option value="0" ng-selected="!cardDetails.expMonth">ex.month</option>
+                  <option value="01">01(Jan)</option>
+                  <option value="02">02(Feb)</option>
+                  <option value="03">03(Mar)</option>
+                  <option value="04">04(Apr)</option>
+                  <option value="05">05(May)</option>
+                  <option value="06">06(Jun)</option>
+                  <option value="07">07(Jul)</option>
+                  <option value="08">08(Aug)</option>
+                  <option value="09">09(Sept)</option>
+                  <option value="10">10(Oct)</option>
+                  <option value="11">11(Nov)</option>
+                  <option value="12">12(Dec)</option>
+              </select>
+            </div>
+
+            <div class="pull-left" style="height:42px;width:27%;margin-left:6%; background-color:white;">
+              <select class="default-inputfield" ng-model="cardDetails.expYear" style="height:100%;width:100%;font-size:16px;padding:2px;color:#7C7B7B">
+                  <option value="0" ng-selected="!cardDetails.expYear">ex.year</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+              </select>
+            </div>
+
+            <div class="pull-right cf" style="height:42px;width:33%;background-color:white;">
+              <div class="pull-left flex-general-column-wrapper-center" style="height:100%;width:40%;">
+                <span style="font-size:14px;color:#C9C7C7">CVC</span>
+              </div>
+              <div class="pull-left" style="height:100%;width:50.9%;">
+                <input type="password" placeholder="CVC" ng-model="cardDetails.cvc" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="fields cf" style="margin-top:20px;">
+            <div class="pull-left" style="width:60%;height:42px;">
+              <button class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#19b698;color:white;font-size:14px;font-weight:500;" ng-click="nextToBillingDetails()">PURCHASE PLAN</button>
+            </div>
+            <div class="pull-right" style="width:30%;height:42px;">
+              <button type="button" class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#D2D4E0;color:white;font-size:14px;" data-dismiss="modal">CANCEL</button>
+            </div>
+          </div>
+
+        </div>
+        <!--Slide1-->
+
+        <!--Slide2-->
+        <div class="wrap-cardDetailsStep2"  ng-show="cardDetailsStep2">
+         
+          <div class="fields" style="margin-top:7px;">
+
+            <div class="flex-general-row-wrapper field-inn">
+
+              <div style="height:100%;width:13%;" class="solo-vertical-center">
+                <span style="font-size:14px;color:#C9C7C7">Addr1</span>
+              </div>
+
+              <div style="height:100%;width:86.9%;" class="solo-vertical-center">
+                <input type="text" ng-model="cardDetails.billing.addrLine1" placeholder="Street address1" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+            
+          </div>
+
+          <div class="fields" style="margin-top:20px;">
+
+            <div class="flex-general-row-wrapper field-inn">
+
+              <div style="height:100%;width:13%;" class="solo-vertical-center">
+                <span style="font-size:14px;color:#C9C7C7">Addr2</span>
+              </div>
+
+              <div style="height:100%;width:86.9%;" class="solo-vertical-center">
+                <input type="text" ng-model="cardDetails.billing.addrLine2" placeholder="Street address2" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+            
+          </div>
+
+
+          <div class="fields cf" style="margin-top:20px;width:100%;">
+
+             <div class="pull-left cf" style="height:42px;width:47%;background-color:white;">
+              <div class="pull-left flex-general-column-wrapper-center" style="height:100%;width:28%;">
+                <span style="font-size:14px;color:#C9C7C7">City</span>
+              </div>
+              <div class="pull-left" style="height:100%;width:62.9%;">
+                <input type="text" placeholder="City" ng-model="cardDetails.billing.city" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+
+            <div class="pull-right cf" style="height:42px;width:47%;background-color:white;">
+              <div class="pull-left flex-general-column-wrapper-center" style="height:100%;width:28%;">
+                <span style="font-size:14px;color:#C9C7C7">State</span>
+              </div>
+              <div class="pull-left" style="height:100%;width:62.9%;">
+                <input type="text" placeholder="State" ng-model="cardDetails.billing.state" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="fields cf" style="margin-top:20px;">
+            <div class="pull-left cf" style="height:42px;width:47%;background-color:white;">
+              <div class="pull-left flex-general-column-wrapper-center" style="height:100%;width:28%;">
+                <span style="font-size:14px;color:#C9C7C7">Zip</span>
+              </div>
+              <div class="pull-left" style="height:100%;width:62.9%;">
+                <input type="text" placeholder="Zipcode" ng-model="cardDetails.billing.zipCode" class="default-inputfield" style="height:100%;width:100%;font-size:16px;padding-left:3px;">
+              </div>
+
+            </div>
+
+            <div class="pull-right cf" style="height:42px;width:47%;background-color:white;">             
+              <select class="default-inputfield" ng-model="cardDetails.billing.country" style="height:100%;width:100%;font-size:16px;padding:2px;color:#7C7B7B">
+                  <option value="0" ng-selected="!cardDetails.billing.country">Select Country</option>
+                  <option ng-repeat="ctry in cardCountries" value="{{ctry.code}}">{{ctry.label}}</option>                 
+              </select>
+            </div>
+          </div>
+
+
+          <div class="fields cf" style="margin-top:20px;">            
+            <div class="pull-left" style="width:30%;height:42px;">
+              <button type="button" class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#D2D4E0;color:white;font-size:14px;" ng-click="prevToCardDetails()">PREVIOUS</button>
+            </div>
+
+            <div class="pull-right" style="width:60%;height:42px;">
+              <!--Purchase-->
+              <button ng-show="!addCardSpinner" class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#19b698;color:white;font-size:14px;font-weight:500;" ng-click="addCard()">PURCHASE PLAN</button>
+
+              <!--While Adding-->
+              <button ng-show="addCardSpinner" class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#19b698;color:white;font-weight:500;">
+                <i class="fa fa-spinner fa-spin" style="font-size:14px;"></i>&nbsp;
+                <span style="font-size:14px;">PROCESSING..</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+        <!--Slide2-->
+
+        <!--Slide3 Already a Free Plan-->
+        <div class="wrap-cardDetailsStep3 flex-general-column-wrapper-center" ng-show="cardAlreadyFreePlan">
+         
+         <div>
+          <span style="font-size:36px;color:gray;font-weight:bold'">
+            <i class="fa fa-thumbs-up"></i>
+          </span>
+         </div>
+         <div>
+          <span style="font-size:20px;color:gray;font-weight:bold'">You're already on the Free plan</span>
+         </div> 
+
+        </div>
+        <!--/Slide3 Already a Free Plan-->
+
+        <!--Slide4 Chooses a Free Plan-->
+        <div class="wrap-cardDetailsStep3 flex-general-column-wrapper-center" ng-show="cardNeedFreePlan">
+         
+                
+         <div>
+          <span style="font-size:18px;color:gray;">Do you want to cancel the</span>
+          <span ng-show="upgradePlanApp.planId==2" style="font-size:20px;color:gray;font-weight:bold;">
+            Prototype Plan?
+          </span>
+          <span ng-show="upgradePlanApp.planId==3" style="font-size:20px;color:gray;font-weight:bold;">
+            Launch Plan?
+          </span>
+          <span ng-show="upgradePlanApp.planId==4" style="font-size:20px;color:gray;font-weight:bold;">
+            Bootstrap Plan?
+          </span>
+          <span ng-show="upgradePlanApp.planId==5" style="font-size:20px;color:gray;font-weight:bold;">
+            Scale Plan?
+          </span>
+          <span ng-show="upgradePlanApp.planId==6" style="font-size:20px;color:gray;font-weight:bold;">
+            Unicorn Plan?
+          </span>
+         </div>
+
+         <div style="margin-top:10px;">
+           <!--Cancel-->
+           <button ng-show="!cancelRecurringSpinner && !showConfirmCancelRecurring" ng-click="confirmCancelRecurring()" class="default-inputfield" style="height:100%;width:100%;border-radius:3px;background-color:#D63B2A;color:white;font-size:14px;font-weight:500;height:34px;">YES, CANCEL MY PLAN</button>
+
+           <!--Confirm-->
+           <button ng-show="!cancelRecurringSpinner && showConfirmCancelRecurring" ng-click="cancelRecurring()" class="default-inputfield" style="height:100%;width:100%;border-radius:3px;background-color:#D63B2A;color:white;font-size:14px;font-weight:500;width:120px;height:34px;">ARE YOU SURE?</button>
+
+           <!--/While Processing-->
+           <button ng-show="cancelRecurringSpinner" class="default-inputfield" style="height:100%;width:100%;border-radius:2px;background-color:#D63B2A;color:white;font-size:14px;font-weight:500;width:160px;height:30px;">
+             <i class="fa fa-spinner fa-spin" style="font-size:14px;"></i>&nbsp;
+                <span style="font-size:14px;">PROCESSING..</span>
+           </button>
+
+         </div> 
+
+        </div>
+        <!--/Slide4 Chooses a Free Plan-->
+        
+      </div>
+
+      <div class="app-credicardplan-wrap" style="">
+        <div class="plan-changer" ng-class="{changebillplan:openBillingPlan}">
+            <div class="cf" style="width:100%;">
+              <div class="pull-right" data-dismiss="modal">
+                <i class="icon ion-close" style="color:#C1C1C1;"></i>
+              </div>
+            </div>
+            <div class="planbox">
+
+              <!--Selected Plan-->
+              <div class="selected-plan splbillplanchangebtn flex-general-row-wrapper" ng-click="toggleBillingPlan()">
+                  <div style="width:85%;">
+                    <div>
+                      <span style="font-size:19px;">{{requestedPlan.label}}</span>
+                    </div>
+                    <div style="margin-top:3px;">
+                      <span style="font-size:13px;">${{requestedPlan.price}} {{requestedPlan.priceDescription | uppercase}}</span>
+                    </div>
+                  </div>
+                  <div style="width:14.9%;height:100%;" class="solo-horizontal-center">
+                      <div>
+                        <span style="font-size:28px;">
+                          <i class="icon ion-ios-arrow-down" style="color:#71767C;"></i>                          
+                        </span>
+                    </div>
+                  </div>
+              </div>
+              <!--/Selected Plan-->
+
+              <!--Change Plan Box-->
+              <div ng-show="openBillingPlan" class="plan-options splbillplanchangebtn"
+               click-outside="closeBillingPlan()" outside-if-not="splbillplanchangebtn">
+
+                <div  ng-repeat="plan in pricingPlans" class="change-plan flex-general-row-wrapper" ng-click="selectThisPlan(plan)">
+                    <div style="width:99.99%;">
+                      <div>
+                        <span style="font-size:19px;">{{plan.label}}</span>
+                      </div>
+                      <div style="margin-top:3px;">
+                        <span style="font-size:13px;">${{plan.price}} {{plan.priceDescription | uppercase}}</span>
+                      </div>
+                    </div>                    
+                </div>
+
+              </div>
+              <!--/Change Plan Box-->
+
+            </div>
+        </div>
+
+        <!--/Plan Details-->
+        <div class="selectedplan-details-wrap">
+          <div ng-repeat="eachCat in requestedPlan.usage">
+            <div class="plan-detstrip solo-vertical-center">
+              <span style="font-size:14px;color:#9AA7BA;font-weight:700;">{{eachCat.category}}</span>
+            </div>
+
+            <div ng-repeat="eachFeat in eachCat.features" class="plan-detstrip-vals flex-general-row-wrapper">
+                <div style="height:100%;width:65%;padding-left:24px;" class="solo-vertical-center">
+                  <span style="color:#9AA7BA;">{{eachFeat.name}}</span>
+                </div>
+
+                <!--Type==Text-->
+                <div ng-show="eachFeat.type=='text'" style="height:100%;width:34.9%;" class="solo-vertical-center cf">
+                  <span style="color:#5E6D77;font-size:14px;font-weight:600;" class="pull-right">{{eachFeat.limit.label}}</span>
+                </div>
+
+                <!--Type==Boolean-->
+                <div ng-show="eachFeat.type=='boolean'" style="height:100%;width:34.9%;" class="solo-vertical-center cf">
+                  <span ng-show="eachFeat.limit.show" style="margin-left:10px;">
+                    <i class="icon ion-checkmark" style="font-size:17px !important; color:gray;margin-top:5px;"></i>
+                  </span>
+                  <span ng-show="!eachFeat.limit.show" style="margin-left:10px;">
+                    --
+                  </span>
+                </div>
+
+            </div>
+
+          </div>       
+
+        </div>
+        <!--/Plan Details-->
+        
+        </div>
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<!-- /Upgrade Card Modal -->
+
+<!-- Core Jquery -->  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
+
+<script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+
+<!-- Core Angular -->  
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+
+<!-- Bootstrap -->  
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<!-- Random --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-resource.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="bower_components/angular-underscore/angular-underscore.min.js"></script>
+
+<!-- Dashboard plugins --> 
+<script src="assets/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.6/javascripts/jquery.nanoscroller.min.js"></script>
+<script type="text/javascript" src="assets/js/behaviour/core.js"></script>
+<script src="assets/js/behaviour/dashboard.js"></script>
+
+<!-- Kendo Datepicker --> 
+<script src="assets/js/kendo.all.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>
+<script src="node_modules/ng-prettyjson/dist/ng-prettyjson.min.js"></script>   
+<!--<script src="node_modules/ng-prettyjson/src/ace.js"></script> 
+<script src="node_modules/ng-prettyjson/src/mode-json.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-clip/0.2.6/ng-clip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-touch.js"></script>
+<script src="assets/js/malihu/js/minified/jquery.mousewheel.min.js"></script>
+<script src="bower_components/ng-focus-on/ng-focus-on.min.js"></script>
+<script src='bower_components/lodash/lodash.min.js'></script>
+<script type="text/javascript" src="assets/js/simplepulse/dist/jQuery.jPulse.js"></script>
+
+<!--Modal, Stackbox and tooltip-->
+<script src="assets/js/bootstrap-modal-master/js/bootstrap-modalmanager.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/js/bootstrap-modal-master/js/bootstrap-modal.js" type="text/javascript" charset="utf-8"></script>
+<script src='bower_components/stackbox/plugin/src/jquery.stackbox.js'></script>
+<script type="text/javascript" src="assets/js/tooltipster-master/js/jquery.tooltipster.min.js"></script>
+<script src="assets/js/htmltooltip.js"></script>
+
+<!--Kendo Datepicker-->
+<script src="assets/js/malihu/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/malihu/jquery.mCustomScrollbar.js"></script>
+
+<!--Notification-->
+<script type="text/javascript" src="assets/js/AmaranJS/dist/js/jquery.amaran.min.js"></script>
+
+<!--Random-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-ace/ui-ace.js"></script>
+<script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script type="text/javascript" src="bower_components/angular-click-outside/clickoutside.directive.js"></script>
+<script type="text/javascript" src="bower_components/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-switch/angular-ui-switch.min.js"></script>
+<script type="text/javascript" src="assets/js/livestamp.js"></script>
+<script type="text/javascript" src="assets/js/dotdot.js"></script>
+<script type="text/javascript" src="assets/js/contextMenu.js"></script>
+<script src="bower_components/tinycolor/dist/tinycolor-min.js"></script>
+<script src="bower_components/angular-color-picker/dist/angularjs-color-picker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="https://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script> 
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+<!--2Checkout-->
+<script src="https://www.2checkout.com/checkout/api/2co.js"></script>
+
+<!--Chart-->
+<script src="bower_components/Chart.js/Chart.js"></script>
+<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+<script type="text/javascript" src="bower_components/nvd3/build/nv.d3.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+
+<!--Files-->
+<script src="assets/js/uploader/src/dmuploader.min.js"></script>
+
+<!--Infinite Scroll Load-->
+<script src='assets/js/lrInfiniteScroll.js'></script>
+
+<!--Angular Main-->
+<script type="text/javascript" src="app/key.js"></script>
+<script type="text/javascript" src="app/config/app.js"></script>
+<script type="text/javascript" src="app/config/route.js"></script>  
+
+<!-- Services -->
+<script src="app/services/projectService.js"></script>  
+<script src="app/services/utilityService.js"></script> 
+<script src="app/services/sharedDataService.js"></script>  
+<script src="app/services/tableTypeService.js"></script>       
+<script src="app/services/componentTypeService.js"></script>
+<script src="app/services/columnDataTypeService.js"></script>  
+<script src="app/services/tableErrorService.js"></script>  
+<script src="app/services/tableService.js"></script>  
+<script src="app/services/userService.js"></script>
+<script src="app/services/paymentService.js"></script> 
+<script src="app/services/beaconService.js"></script> 
+<script src="app/services/filterService.js"></script> 
+<script src="app/services/cloudBoostApiService.js"></script>  
+<script src="app/services/queueService.js"></script> 
+<script src="app/services/cacheService.js"></script> 
+<script src="app/services/serverSettingsService.js"></script> 
+<script src="app/services/notificationService.js"></script>
+<script src="app/services/analyticsService.js"></script> 
+<script src="app/services/appSettingsService.js"></script> 
+<script src="app/services/pushService.js"></script> 
+<script src="app/services/fileService.js"></script>
+<script src="app/services/emailCampaignService.js"></script>             
+
+<!--Controllers-->
+<script type="text/javascript" src="app/controllers/indexController.js"></script>
+<script type="text/javascript" src="app/controllers/appsController.js"></script>
+<script type="text/javascript" src="app/controllers/tableDesignerController.js"></script>
+<script type="text/javascript" src="app/controllers/dataBrowserController.js"></script>
+<script type="text/javascript" src="app/controllers/analyticsController.js"></script>
+<script type="text/javascript" src="app/controllers/queuesController.js"></script>
+<script type="text/javascript" src="app/controllers/cacheController.js"></script>
+<script type="text/javascript" src="app/controllers/profileController.js"></script>
+<script type="text/javascript" src="app/controllers/adminController.js"></script>
+<script type="text/javascript" src="app/controllers/fileBrowserController.js"></script>
+<script type="text/javascript" src="app/controllers/appSettingsController.js"></script>
+<script type="text/javascript" src="app/controllers/pushBrowserController.js"></script>
+<script type="text/javascript" src="app/controllers/emailCampaignController.js"></script>
+
+<!--Directives-->
+<script type="text/javascript" src="app/directives/randomDirectives.js"></script>
+<script type="text/javascript" src="app/directives/autocompleteDirective.js"></script>
+<script type="text/javascript" src="app/directives/devAutoCompleteDirective.js"></script>
+<script type="text/javascript" src="app/directives/fileDirective.js"></script>
+<script type="text/javascript" src="app/directives/scrollbarDirective.js"></script>
+<script type="text/javascript" src="app/directives/tooltipDirective.js"></script>
+<script type="text/javascript" src="app/directives/validationDirective.js"></script>
+
+<!--Custom Directives-->
+<script type="text/javascript" src="app/directives/cbFileDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbAclDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbJsonDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbGeoDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbSearchObjectsDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbListDirective.js"></script>
+<script type="text/javascript" src="app/directives/cbDataBrowserDirective.js"></script>
+<script type="text/javascript" src="app/directives/dashboardFileDirective.js"></script>
+
+
+
+<!--Begin Inspectlet Embed Code-->
+<script type="text/javascript" id="inspectletjs">
+  window.__insp = window.__insp || [];
+  __insp.push(['wid', 359813771]);
+  (function() {
+  function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
+  if (window.attachEvent) window.attachEvent('onload', __ldinsp);
+  else window.addEventListener('load', __ldinsp, false);
+  })();
+</script>
+<!--End Inspectlet Embed Code -->
+
+</body>
+
+</html>
+
+
+  

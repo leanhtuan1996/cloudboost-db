@@ -1,0 +1,187 @@
+<div class="modal-dialog">
+  <div class="modal-content"> 
+
+    <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+      <div class="pull-left" style="padding-left:8px;">
+        <div>
+          <span style="font-size:22px;color:white;">Files</span>
+        </div>
+
+        <div>
+          <span style="font-size:14px;color:white;">Add files to your app.</span>
+        </div>
+
+      </div> 
+      <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+        <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+          <i class="fa fa-paperclip" style="font-size:30px;color:white;"></i>
+        </div>
+      </div>         
+    </div>
+
+    <span id="fakeclick"></span>
+    <div class="modal-body" style="border-top:1px solid #dddbdb;height: 360px;">
+
+      <div class="flex-general-row-wrapper-center" style="height: 100%;">   
+         
+        <!-- Add File D&D Markup -->
+        <div ng-show="!editableFile && (!fileInfo || !fileInfo.rawFile)" class="uploader" ddfile>
+          <div>Drag &amp; Drop Files Here</div>
+          <div class="or">-or-</div>
+          <div class="browser">
+            <label class="db-color-bg">
+              <span>Choose files</span>
+              <input type="file" name="files[]" multiple="multiple" title='Click to add Files'>
+            </label>
+          </div>
+        </div>
+        <!-- /Add File D&D Markup --> 
+
+        <!--Error,Spinner,Progress-->
+        <div ng-if="fileInfo.spinner || fileInfo.error" style="height: 100%;width: 100%;" class="flex-general-column-wrapper-center">
+
+          <!--Progress-->
+          <div ng-show="!fileInfo.error" style="width: 90%">
+            <div class="progress">              
+              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{fileInfo.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{fileInfo.progress}}%">
+                <span>{{fileInfo.progress}}% Complete</span>
+              </div>
+            </div>
+          </div>
+
+          <!--Error-->
+          <div ng-show="fileInfo.error" style="width: 90%" class="flex-general-column-wrapper-center">
+            <div>
+              <span style="font-size: 14px;color:red;">Error:{{fileInfo.error}}</span>
+            </div>
+          </div>
+
+        </div>
+        <!--Error,Spinner,Progress-->
+
+
+        <div  ng-show="fileInfo && fileInfo.rawFile && fileInfo.extension && !fileInfo.spinner && !fileInfo.error" style="height: 100%;width: 100%;"> 
+
+          <!--View File for Images-->
+          <div ng-show="fileInfo.rawFile  && (fileInfo.extension=='jpeg' || fileInfo.extension=='jpg' || fileInfo.extension=='png' || fileInfo.extension=='tif' || fileInfo.extension=='gif')" style="height: 100%;width: 100%;" class="">  
+
+            <!--Image-->
+            <div style="height: 90%;width: 100%;" class="flex-general-column-wrapper-center">             
+              <img id="selectd-file-img" style="height: 100%;">                               
+            </div>
+
+            <div style="width: 100%;" class="flex-general-row-wrapper-center">
+              <span style="margin-top:12px;">{{fileInfo.obj.name}}</span> 
+            </div>
+
+          </div> 
+
+          <!--View File for Other Files-->
+          <div ng-show="fileInfo && fileInfo.rawFile  && (fileInfo.extension!='jpeg' && fileInfo.extension!='jpg' && fileInfo.extension!='png' && fileInfo.extension!='tif' && fileInfo.extension!='gif')" style="height: 100%;width: 100%;">
+
+              <!--Other Files-->
+              <div style="height: 90%;width: 100%;" class="flex-general-column-wrapper-center">
+                
+                <!--Word-->
+                <img ng-if="fileInfo.extension=='doc' || fileInfo.extension=='docx'" src="assets/images/msword.png" style="height:100%;">
+
+                <!--Ppt-->
+                <img ng-if="fileInfo.extension=='ppt' || fileInfo.extension=='pptx'" src="assets/images/msppt.png" style="height:100%;">
+
+                <!--Excel-->
+                <img ng-if="fileInfo.extension=='xls' || fileInfo.extension=='xlsx'" src="assets/images/msexcel.png" style="height:100%;">
+
+                <!--Pdf-->
+                <img ng-if="fileInfo.extension=='pdf'" src="assets/images/pdf.png" style="height:100%;"> 
+
+                <!--Others-->
+                <img ng-if="fileInfo.extension!='pdf' && fileInfo.extension!='doc' && fileInfo.extension!='docx' && fileInfo.extension!='ppt' && fileInfo.extension!='pptx' && fileInfo.extension!='xls' && fileInfo.extension!='xlsx'" src="assets/images/random2.png" style="height:100%;">                    
+                                
+              </div> 
+
+              <div style="width: 100%;" class="flex-general-row-wrapper-center">
+                <span style="margin-top:12px;">{{fileInfo.obj.name}}</span> 
+              </div>               
+
+          </div>
+          
+        </div>
+
+        <div  ng-show="(!fileInfo || fileInfo.rawFile) && editableFile && !fileInfo.spinner && !fileInfo.error" style="height: 100%;width: 100%;">  
+          <!--View File for Images-->
+          <div ng-if="editableFile && editableFile.document.url && ((editableFile.document.name | extension)=='jpeg' || (editableFile.document.name | extension)=='jpg' || (editableFile.document.name | extension)=='png' || (editableFile.document.name | extension)=='tif' || (editableFile.document.name | extension)=='gif')" style="height: 100%;width: 100%;">
+
+            <!--Image-->
+            <div style="height: 90%;width: 100%;" class="flex-general-column-wrapper-center">              
+              <img ng-src="{{editableFile.document.url}}" style="height: 100%;">                               
+            </div>
+
+            <div style="width: 100%;" class="flex-general-row-wrapper-center">
+              <span style="margin-top:14px;">{{editableFile.document.name}}</span> 
+            </div>           
+
+          </div> 
+
+          <!--View File for Other Files-->
+          <div ng-show="editableFile && editableFile.document.url && ((editableFile.document.name | extension)!='jpeg' && (editableFile.document.name | extension)!='jpg' && (editableFile.document.name | extension)!='png' && (editableFile.document.name | extension)!='tif' && (editableFile.document.name | extension)!='gif')" style="height: 100%;width: 100%;">
+
+              <!--Image-->
+              <div style="height: 90%;width: 100%;" class="flex-general-column-wrapper-center"> 
+
+                <!--Word-->
+                <img ng-if="(editableFile.document.name | extension)=='doc' || (editableFile.document.name | extension)=='docx'" src="assets/images/msword.png" style="height:100%;">
+
+                <!--Ppt-->
+                <img ng-if="(editableFile.document.name | extension)=='ppt' || (editableFile.document.name | extension)=='pptx'" src="assets/images/msppt.png" style="height:100%;">
+
+                <!--Excel-->
+                <img ng-if="(editableFile.document.name | extension)=='xls' || (editableFile.document.name | extension)=='xlsx'" src="assets/images/msexcel.png" style="height:100%;">
+
+                <!--Pdf-->
+                <img ng-if="(editableFile.document.name | extension)=='pdf'" src="assets/images/pdf.png" style="height:100%;"> 
+
+                <!--Others-->
+                <img ng-if="(editableFile.document.name | extension)!='pdf' && (editableFile.document.name | extension)!='doc' && (editableFile.document.name | extension)!='docx' && (editableFile.document.name | extension)!='ppt' && (editableFile.document.name | extension)!='pptx' && (editableFile.document.name | extension)!='xls' && (editableFile.document.name | extension)!='xlsx'" src="assets/images/random2.png" style="height:100%;"> 
+
+              </div> 
+
+              <div style="width: 100%;" class="flex-general-row-wrapper-center">
+                <span style="margin-top:14px;">{{editableFile.document.name}}</span>  
+              </div>             
+
+            </div>  
+        </div>     
+
+      </div>
+
+    </div>
+    <!--/model-body-->
+
+    <!--Footer-->
+    <div class="modal-footer">        
+      <button ng-show="!fileInfo.spinner" type="button" class="btn btn-default cb-modal-default-btn" data-dismiss="modal" ng-click="closeModal()">Close</button>
+
+      <!--New File-->
+      <!--Save-->
+      <button ng-show="fileInfo && fileInfo.obj && !fileInfo.spinner" type="button"  ng-click="saveFile()" class="btn btn-primary cb-modal-default-btn-long" ><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+
+      <!--Processing-->
+      <button ng-show="fileInfo.spinner" type="button" class="btn btn-primary cb-modal-default-btn-long" ></i>&nbsp;Processing..</button>
+
+      <!--Remove File-->
+      <button type="button" ng-if="fileInfo && fileInfo.rawFile && fileInfo.extension && !fileInfo.spinner" ng-click="removeFile()" class="btn btn-danger cb-modal-default-btn-long" ><i class="fa fa-times-circle-o"></i>&nbsp;Remove</button> 
+      <!--/New File-->
+
+
+      <!--File View-->
+      <!--Download-->
+      <a ng-if="!selectedFile && editableFile && editableFile.document.url" ng-href="{{editableFile.document.url}}" target="_blank" class="btn btn-primary cb-modal-default-btn-long" ><i class="fa fa-download"></i>&nbsp;Download</a>
+
+      <!--Remove File-->
+      <button ng-if="(!fileInfo || !fileInfo.rawFile) && editableFile && editableFile.document.url" type="button" ng-click="deleteFile()" class="btn btn-danger cb-modal-default-btn-long" ><i class="fa fa-trash-o"></i>&nbsp;Delete</button> 
+      <!--/File View-->
+
+    </div>
+
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

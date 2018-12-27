@@ -1,0 +1,767 @@
+<div class="cl-mcont app-page" ng-init="init()">
+    <div class="row" ng-if="!dataLoading && !loadingError">   
+
+      <div ng-show="!provider" class="col-sm-12 col-md-6 col-lg-3">
+          <div class="block block-color info" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)" data-ng-class="{hostedapph:isHosted,nonhostedapph:!isHosted}">
+            <div class="header">      
+              <h3><i class="fa fa-plus-circle"></i>&nbsp;create an app</h3>
+            </div>
+            <div class="content">
+              <form role="form" name="projectForm" ng-submit="createProject(projectForm.$valid)" style="margin-top:30px;"> 
+
+                <div style="">
+                  <div class="form-group" style="margin-top:20px;">
+                    <label circlepulse style="font-size:16px;">App Name</label>                  
+                     <input type=""  class="form-control" placeholder="Pick a good name" required ng-model="newApp.name" app-name-validation>
+                  </div>
+                </div>               
+                                              
+                <center class="create-app-wrapper">
+                  <!--Create App-->
+                  <button style="position:relative;" id="create-app-btn" ng-disabled="!showSaveBtn" data-ng-show="showSaveBtn" type="submit" class="btn btn-info btn-rad btn-trans">
+                    <i class="fa fa-plus"></i>&nbsp;Create new app
+
+                  <!--Beacon-->
+                  <div ng-show="beacon && !beacon.firstApp && showSaveBtn" class="create-app-beacon-container" style="cursor:pointer;"></div> 
+
+                  </button>
+                  
+                  <!--While Creating App-->
+                  <button data-ng-show="!showSaveBtn" type="submit" class="btn btn-info btn-rad btn-trans">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;&nbsp;Creating app...         
+                  </button>
+                                      
+                </center>
+
+                <div  ng-show="!showSaveBtn" ng-class="{startcreatingapp:startCreatingApp,creatingdefaultables:creatingDefaultTables,yourappisready:yourAppIsReady}" class="flex-general-column-wrapper-center appuser-inter-wrap cf">
+                  <!--Message1-->
+                  <div class="flex-general-column-wrapper-center appuser-inter-msg1 cf">
+                    <span style="color:#A3A3A3;">Provisioning your servers...</span>
+                  </div>
+
+                  <!--Message2-->
+                  <div class="flex-general-column-wrapper-center appuser-inter-msg2 cf">
+                    <span style="color:#A3A3A3;">Creating Role, User and Device Tables...</span>
+                  </div>
+
+                  <!--Message3-->
+                  <div class="flex-general-column-wrapper-center appuser-inter-msg3 cf">
+                    <span style="color:#A3A3A3;">Your app is now ready.</span>
+                  </div>
+                </div>          
+
+              </form>
+            </div>
+          </div>
+      </div>
+        
+
+      <!--App List Loaded--> 
+      <div ng-if="!dataLoading && !loadingError" class="col-sm-12 col-md-6 col-lg-3" ng-repeat="list in projectListObj | orderBy:'_id':true">       
+
+        <!-- Details --> 
+        <div class="success" data-ng-class="{block: !animateApp[$index],'block-color': !animateApp[$index],hostedapph:isHosted,nonhostedapph:!isHosted}" ng-hide="showProject[$index]" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)">
+
+          <div ng-if="!animateApp[$index]" data-ng-class="{animated:isAppCreated==true,fadeIn:$index==0,fadeIn:$index==1}"> 
+              <div class="header" style="position:relative;">
+                <div class="actions" ng-show="list | validUser">
+                  <a  id="app-todo-options-btn{{$index}}" class="app-todo-options-btn"  ng-click="toggleAppOptions($index)">
+                    <i class="fa fa-angle-down" style="font-size:1.7em"></i>
+                  </a>
+                </div>     
+                <h3><i class="fa fa-cloud "></i>&nbsp;&nbsp;{{list.name}}</h3>
+
+                <!--Drop Down Options-->
+                <div ng-show="appOptions[$index] && (list | validUser)" class="app-todo-options" click-outside="closeAppOptions($index)" outside-if-not="app-todo-options-btn">
+                  <div style="width:100%;height:auto;" class="app-todo-options-btn">
+
+                    <div class="flex-general-row-wrapper app-options-item" style="padding-top:5px;padding-bottom:5px;padding-left:7px;padding-right:5px;" id="edit-app-btn{{$index}}" ng-click="toggleAppEdit($index); $event.stopPropagation()">
+                      <div>
+                        <i class="fa fa-cog" style=""></i>
+                      </div>
+                      <div style="margin-left: 4px;">
+                        <span style="font-size:14px;font-weight: 500;">Settings</span>
+                      </div>  
+                    </div>
+
+                    <div class="flex-general-row-wrapper app-options-item" style="padding-top:5px;padding-bottom:5px;padding-left:7px;padding-right:5px;" ng-click="changeAppKeysInit($index,list); $event.stopPropagation()">
+                      <div>
+                        <i class="icon ion-unlocked" style="font-size: 12px;"></i>
+                      </div>
+                      <div style="margin-left: 4px;">
+                        <span style="font-size:14px;font-weight: 500;">Change Keys</span>
+                      </div>  
+                    </div>
+
+                    <div class="flex-general-row-wrapper app-options-item" style="padding-top:5px;padding-bottom:5px;padding-left:7px;padding-right:5px;" ng-click="addDevelopersInit($index,list); $event.stopPropagation()">
+                      <div>
+                        <i class="icon ion-person-add" style=""></i>
+                      </div>
+                      <div style="margin-left: 4px;">
+                        <span style="font-size:14px;font-weight: 500;">Add Developers</span>
+                      </div>  
+                    </div>
+
+                  </div>  
+                </div>  
+                <!--/Drop Down Options-->
+
+              </div>  
+            
+
+              <!--If Hosted-->
+              <div ng-if="isHosted" class="appcurrentplan flex-general-row-wrapper">
+                  <div class="solo-vertical-center" style="height:100%;padding-left:10px;width:60%;">
+
+                    <span ng-if="!list.planId || list.planId==1" style="font-weight:700;color:gray;">FREE PLAN</span>
+                    <span ng-if="list.planId==2" style="font-weight:700;color:gray;">LAUNCH PLAN</span>
+                    <span ng-if="list.planId==3" style="font-weight:700;color:gray;">BOOTSTRAP PLAN</span>
+                    <span ng-if="list.planId==4" style="font-weight:700;color:gray;">SCALE PLAN</span>
+                    <span ng-if="list.planId==5" style="font-weight:700;color:gray;">UNICORN PLAN</span>
+
+                  </div>
+
+                  <div ng-show="(list | validUser) && !provider" class="flex-general-column-wrapper-center" style="height:100%;width:40%; background-color:#EDEDED;color:#7C7C7C;cursor:pointer;border-left:1px solid #C9C9C9;" ng-click="initUpgradePlan(list);">
+                    <span style="">Upgrade
+                    &nbsp;
+                    <i class="icon ion-arrow-graph-up-right" style="font-size:16px;"></i>
+                    </span>
+                  </div>
+              </div>
+              <!--If Hosted-->
+
+              <div ng-if="!isHosted" style="height: 20px;">
+              </div>
+
+              <div class="appbx-content"> 
+
+                <div class="app-info-box" style="margin-top:15px;">
+
+                  <!--API CALLS Loading-->
+                  <div ng-if="apiCallsLoading[list.appId] && !apiCallsError[list.appId]">
+                    <div class="app-api-brief-details">
+
+                      <div class="flex-general-row-wrapper" style="height:20px;">  
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <div  style="width:60%;height:6px;background-color:#EEEEEE;">
+                          </div>
+                        </div>
+                      </div> 
+
+                      <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <!--Loading-->
+                          <div  style="width:100%;height:99%;background-color:#EEEEEE;">
+                          </div>
+                          <!--Loading-->                        
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--//API CALLS Loading-->
+
+                  <!--API CALLS Error-->
+                  <div ng-if="apiCallsError[list.appId] && !apiCallsLoading[list.appId]">
+                    <div class="app-api-brief-details">
+
+                      <div class="flex-general-row-wrapper" style="height:20px;">  
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <div style="font-size: 12px;color:#999797;">
+                            Error loading API
+                            <span ng-click="loadApiCountByAppId(list)" style="font-size: 12px;color:#36abf9;cursor:pointer;">&nbsp;(refresh)</span>  
+                          </div>
+                        </div>
+                      </div> 
+
+                      <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <!--Error-->
+                          <div  style="width:100%;height:99%;background-color:#EEEEEE;">
+                          </div>
+                          <!--Error-->                        
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--//API CALLS Error-->
+
+                  <!--API CALLS Filled-->
+                  <div ng-if="!apiCallsLoading[list.appId] && !apiCallsError[list.appId]">
+                    <div>
+                      <div class="app-api-brief-details">
+                        <div class="flex-general-row-wrapper" style="height:20px;">       
+
+                          <div class="solo-vertical-center" style="height:100%;">
+                            <div>
+                              <span style="font-size: 12px;color:#999797;font-weight:700;">API Calls</span>
+                              <span ng-if="isHosted" style="font-size: 12px;color:#BABABA;font-weight:600;">
+                              &nbsp;{{apiCallsUsed[list.appId].percentage}} used of {{apiCallsUsed[list.appId].limit}}
+                              </span>                         
+                            </div>
+                          </div>
+
+                        </div> 
+
+                        <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                          <div class="solo-vertical-center" style="height:100%;width:100%;">      
+
+                            <!--Filled-->
+                            <div ng-if="isHosted" style="width:100%;height:99%;background-color:#EEEEEE;">
+                              <div style="height:100%;" ng-style={"width":apiCallsUsed[list.appId].percentage,"background-color":apiCallsUsed[list.appId].color}></div>
+                            </div>
+                            <!--Filled-->
+
+                            <!--SimpleTxt-->
+                            <div ng-if="!isHosted" style="width:100%;">
+                              <div style="height:100%;">{{apiCallsUsed[list.appId].originalCount}} API Calls this month</div>
+                            </div>
+                            <!--SimpleTxt-->
+                            
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!--//API CALLS Filled--> 
+
+                  <!--Storage Loading-->
+                  <div ng-if="storageLoading[list.appId] && !storageError[list.appId]" style="margin-top:5px;">
+                    <div class="app-api-brief-details">
+
+                      <div class="flex-general-row-wrapper" style="height:20px;">  
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <div  style="width:60%;height:6px;background-color:#EEEEEE;">
+                          </div>
+                        </div>
+                      </div> 
+
+                      <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <!--Loading-->
+                          <div  style="width:100%;height:99%;background-color:#EEEEEE;">
+                          </div>
+                          <!--Loading-->                        
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--//Storage Loading-->
+
+                  <!--Storage Error-->
+                  <div ng-if="storageError[list.appId] && !storageLoading[list.appId]" style="margin-top:5px;">
+                    <div class="app-api-brief-details">
+
+                      <div class="flex-general-row-wrapper" style="height:20px;">  
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <div style="font-size: 12px;color:#999797;">
+                            Error loading Storage
+                            <span ng-click="loadStorageCountByAppId(list)" style="font-size: 12px;color:#36abf9;cursor:pointer;">&nbsp;(refresh)</span>  
+                          </div>
+                        </div>
+                      </div> 
+
+                      <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                        <div class="solo-vertical-center" style="height:100%;width:100%;">
+                          <!--Error-->
+                          <div  style="width:100%;height:99%;background-color:#EEEEEE;">
+                          </div>
+                          <!--Error-->                        
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--//Storage Error-->
+
+                  <!--Storage Filled-->
+                  <div ng-if="!storageLoading[list.appId] && !storageError[list.appId]" style="margin-top:5px;">
+                    <div>
+                      <div class="app-api-brief-details">
+                        <div class="flex-general-row-wrapper" style="height:20px;">       
+
+                          <div class="solo-vertical-center" style="height:100%;">
+                            <div>
+                              <span style="font-size: 12px;color:#999797;font-weight:700;">Storage</span> 
+                              <span ng-if="isHosted" style="font-size: 12px;color:#BABABA;font-weight:600;">
+                              &nbsp;{{storageUsed[list.appId].percentage}} used of {{storageUsed[list.appId].limit}}
+                              </span>                         
+                            </div>
+                          </div>
+
+                        </div> 
+
+                        <div class="flex-general-row-wrapper" style="height:6px;margin-top: 2px;">
+                          <div class="solo-vertical-center" style="height:100%;width:100%;">      
+
+                            <!--Filled-->
+                            <div ng-if="isHosted" style="width:100%;height:99%;background-color:#EEEEEE;">
+                              <div style="height:100%;" ng-style={"width":storageUsed[list.appId].percentage,"background-color":storageUsed[list.appId].color}></div>
+                            </div>
+                            <!--Filled-->
+
+                            <!--SimpleTxt-->
+                            <div ng-if="!isHosted" style="width:100%;">
+                              <div style="height:100%;">{{storageUsed[list.appId].originalSize}} GB consumed</div>
+                            </div>
+                            <!--SimpleTxt-->
+                            
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!--//Storage Filled-->               
+                  
+                </div>
+
+                <div class="" style="margin-top:15px;width:248px;">
+                  <div class="flex-general-row-wrapper cf" style="padding:0;">
+
+                    <div class="data-brwsr-wrapper pull-left" style="margin-left:-3.5px;">
+                        <button type="button" class="btn pull-left" data-placement="top" ng-click="goToTableDesigner(list)" style="background-color:#11AA8C;color:white;border-radius:2px;border:none;width:121px;border:1px solid #11AA8C;"> Manage App</button>
+
+                        <!--Beacon-->
+                        <div ng-if="beacon && !beacon.tableDesignerLink && $index==0" ng-click="goToTableDesigner(list)" class="first-app-beacon-container" style="cursor:pointer;"></div>
+                    </div>
+
+                    <button type="button pull-right" class="btn btn-default" ng-click="viewKeys(list)" style="border-radius:2px;color:gray;width:121px;">
+                      App Keys</button>
+                  </div>
+                </div>
+
+              </div>
+
+              <div ng-show="(list | validUser)" class="app-developers-strip cf" style="margin-top:12px;">
+                <div style="height:100%;" class="pull-left solo-vertical-center">
+                  <span style="color:#71767C;font-size:10px;cursor:pointer;" ng-click="addDevelopersInit($index,list)" >Add a Developer</span>
+                </div>
+
+                <div style="height:100%;" class="pull-right solo-vertical-center">
+                  <div style="height:70%;width:28px;border-radius:30px;border:1px solid #71767C;" class="flex-general-column-wrapper-center" ng-click="addDevelopersInit($index,list)">
+                    <i class="icon ion-person-add" style="font-size:18px;color:#71767C;"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!--Empty Div for a while-->
+            <div ng-if="animateApp[$index]">
+            </div> 
+            <!--Empty Div for a while--> 
+          </div> 
+
+          <!-- Edit -->
+          <div ng-hide="!showProject[$index]" id="edit-app{{$index}}" click-outside="closeEditApp($index)" outside-if-not="edit-app-btn{{$index}}" class="block block-color fadedPrimary"  data-ng-class="{hostedapph:isHosted,nonhostedapph:!isHosted}">
+            <div class="header">
+              <h3><i class="fa fa-pencil "></i>&nbsp;&nbsp;edit project</h3>
+            </div>
+
+            <div class="content">
+                  <form role="form" class="projectForm" name="editProjectForm" ng-submit="editProject(editProjectForm.$valid,$index,list,editProjectName)">
+                        
+                          <div class="form-group formControlGroup">
+                            <label class="formLabel">New App Name</label>
+                            <input type="text" class="form-control projectFormControl"   required  ng-init="editProjectName=list.name" ng-model="editProjectName">
+                          </div>                           
+                          <center data-ng-show="!isLoading[$index]">
+                              <button type="submit" class="btn btn-default"><i class="fa fa-save"></i>Save</button>
+                             <button type="button" class="btn btn-default" ng-click="toggleAppEdit($index)"><i class="fa fa-times"></i>Cancel</button>
+                          </center>
+                         
+                          <div class="row" style="margin-top:10px;">
+                            <div class="col-md-12">
+                              <center data-ng-if="isLoading[$index]">
+                                <i class="fa fa-spinner fa-spin fa-2x"></i>
+                              </center>                            
+                              <center data-ng-if="!isLoading[$index]">
+                                  <button type="button" ng-click="deleteAppModal(list, $index)" class="btn btn-danger">
+                                  <i class="fa fa-trash-o"></i>&nbsp;Delete App</button>
+                              </center>
+                           </div>
+                        </div>
+                  </form>
+            </div>
+          </div>
+
+        </div>         
+    </div>
+
+    <!--Apps Loading Error-->
+    <div ng-show="!dataLoading && loadingError" class="row flex-general-column-wrapper-center" style="height:64vh;">
+        <div>
+          <h4 style="color:gray;">
+            <i class="fa fa-exclamation-triangle"></i>
+            {{loadingError}}
+          </h4>
+        </div>
+    </div>
+    <!--/Apps Loading Error-->
+
+    <!--While Loading-->
+    <div ng-show="dataLoading && !loadingError" class="row flex-general-column-wrapper-center" style="height:78vh;">
+      <div style="margin-top:-10px;">
+          <div>
+            <img src="assets/images/ajax-loader.gif">
+          </div>          
+      </div>     
+    </div>
+    <!--/While Loading-->
+</div>
+
+
+
+<!--MODALS-->
+<!-- Keys Modal -->
+<div class="modal fade colored-header" id="keysModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">      
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">App Keys</span>
+          </div>
+
+          <div>
+            <span ng-show="!changeAppKeys" style="font-size:14px;color:white;">Use keys to initialize your app.</span>
+            <span ng-show="changeAppKeys" style="font-size:14px;color:white;">Generate new Keys for your app.</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">          
+            <i class="icon ion-unlocked" style="font-size: 30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <div class="modal-body form">
+       
+        <div ng-show="!changeAppKeys" class="form-group">
+          <label>App ID</label>        
+          <div class="input-group">
+                <div style="height: 34px;border: 1px solid #d4d5d6;padding:6px;">
+                  {{selectedProject.appId}}
+                </div> 
+
+                <span class="input-group-btn">
+                  <button class="btn btn-prusia" type="button" clip-copy="selectedProject.appId" ng-click="copyKeys('appId')">{{appKeysText.appId}}</button>                  
+                </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Master key</label>         
+          <div class="input-group">                
+                <div style="height: 34px;border: 1px solid #d4d5d6;padding:6px;">
+                  {{selectedProject.keys.master}}
+                </div>
+
+                <span class="input-group-btn">
+                  <button class="btn btn-prusia" type="button" clip-copy="selectedProject.keys.master" ng-click="copyKeys('masterKey')">{{appKeysText.masterKey}}</button>
+
+                  <button ng-show="!masterKeyChanging && changeAppKeys" class="btn btn-primary" type="button" style="margin-left:3px;" ng-click="changeMasterKey(selectedProject.appId)">Change</button>
+
+                  <button ng-show="masterKeyChanging && changeAppKeys" class="btn btn-primary" type="button" style="margin-left:3px;">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;Generating..
+                  </button>
+                </span>
+          </div>
+        </div>        
+
+        <div class="form-group">
+          <label>Client key</label>          
+          <div class="input-group">                
+                <div style="height: 34px;border: 1px solid #d4d5d6;padding:6px;">
+                  {{selectedProject.keys.js}}
+                </div>
+
+                <span class="input-group-btn">
+                <button class="btn btn-prusia" type="button" clip-copy="selectedProject.keys.js" ng-click="copyKeys('javascriptKey')">{{appKeysText.javascriptKey}}</button>
+
+                <button ng-show="!clientKeyChanging && changeAppKeys" class="btn btn-primary" type="button" ng-click="changeClientKey(selectedProject.appId)" style="margin-left:3px;">Change</button>
+
+                <button ng-show="clientKeyChanging && changeAppKeys" class="btn btn-primary" type="button" style="margin-left:3px;">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;Generating..
+                  </button>
+
+                </span>
+          </div>
+        </div>      
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Close</button>  
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.Keys Modal -->
+
+<!--delete app modal-->
+  <div class="modal fade colored-header danger" id="deleteappmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#D60A00;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Delete App</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">You're about delete</span>
+            <span style="font-size:14px;color:white;font-weight:700;">"{{projectToBeDeleted.name}}"</span>
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#9b0601;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+            <i class="fa fa-cloud" style="font-size:30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <div class="modal-body" style="border-top:1px solid #dddbdb;">
+        <div style="width:100%;">
+          
+          <div class="flex-general-column-wrapper-center" style="width:100%;">            
+
+            <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+              <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+                <input type="text" ng-model="confirmAppName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Confirm App name..">
+              </div>
+            </div>
+
+          </div>                
+
+        </div>  
+      </div> 
+
+      <div class="modal-footer">
+        <button ng-show="!deleteSpinner" type="button" class="btn btn-default btn-flat" data-dismiss="modal">Cancel</button>
+
+        <!--continue btn-->
+        <button ng-show="!deleteSpinner" type="button" class="btn btn-flat" ng-click="deleteProject()" style="background-color:#D60A00; color:white;">Continue</button>
+
+        <!--while deleting-->
+        <button ng-show="deleteSpinner" type="button" class="btn btn-flat" style="background-color:#D60A00; color:white;">
+          <i class="fa fa-spinner fa-spin"></i>&nbsp;Deleting...</button>
+      </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--Add Developers Modal -->
+<div class="modal fade colored-header" id="developersModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">     
+
+      <div style="height:80px; width:100%;padding:13px;background-color:#549afc;border-top-left-radius:4px;border-top-right-radius:4px;">
+        <div class="pull-left" style="padding-left:8px;">
+          <div>
+            <span style="font-size:22px;color:white;">Add Developers</span>
+          </div>
+
+          <div>
+            <span style="font-size:14px;color:white;">Add Developers to contribute to your app.</span>           
+          </div>
+
+        </div> 
+        <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#0F6DA6;">
+          <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">          
+            <i class="icon ion-person-add" style="font-size: 30px;color:white;"></i>
+          </div>
+        </div>         
+      </div>
+
+      <div class="modal-body form flex-general-column-wrapper-center">
+       
+       <div style="width:98%;">
+
+        <div class="form-group">
+          <div class="input-group">            
+            <input type="text" class="form-control" placeholder="Enter email to invite.." devautokomplete>
+            <span class="input-group-btn">
+              <button ng-show="!inviteUserSpinner" class="btn btn-prusia" type="button" ng-click="inviteUser()">Invite</button> 
+              <button ng-show="inviteUserSpinner" class="btn btn-prusia" type="button">
+                <i class="fa fa-spinner fa-spin"></i>&nbsp;Inviting..</button>                 
+            </span>
+
+          </div>
+        </div>
+
+        <div class="new-showlist-developers">
+          <table>
+            <thead class="appdev-thead">
+              <tr>               
+                <th>
+                  <div>
+                    User
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    Role
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    Status
+                  </div>
+                </th>
+                <th class="table-TxtAlign-center">
+                  <div>
+                    Remove
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="appdev-tbody">
+              <!--Developers-->
+              <tr ng-repeat="selProj in selectedProject.developers">                
+                <td width="47%">
+                  <div ng-repeat="eachDev in developers">
+                    <p ng-if="eachDev._id==selProj.userId" style="padding: 0 !important;margin: 0 !important;">{{eachDev.name}}</p>
+                    <p ng-if="eachDev._id==selProj.userId" style="padding: 0 !important;margin-top: -4px !important;margin-bottom:0 !important;">{{eachDev.email}}</p>
+                  </div>
+                </td>
+                <td width="20%">
+                  <div>
+                    <select class="users-bodytd-select"  ng-model="selProj.role" ng-change="changeDeveloperRole($index,selProj)">
+                      <option  ng-repeat="roleslist in developerRolesList"  ng-selected="selProj.role==roleslist" value="{{roleslist}}">{{roleslist}}</option> 
+                    </select>
+                  </div>
+                </td>
+                <td width="20%">
+                  <div>
+                    <span style="background-color: #e5e5e5; padding-left: 3px;padding-right: 3px; border-radius: 2px;color: #2e2e2e;">Accepted</span>
+                  </div>
+                </td>
+                <td class="table-TxtAlign-center" width="13%">
+                  <div>
+                    <i ng-show="!appDevSpinner[$index]"  ng-click="removeDeveloperFromProject($index,selProj)" class="icon ion-close" style="font-size:12px;"></i>
+                    <i ng-show="appDevSpinner[$index]" class="fa fa-spinner fa-spin" style="font-size:12px;"></i>
+                  </div>
+                </td>
+              </tr>
+              <!--/Developers-->
+
+              <!--Invitees-->
+              <tr ng-repeat="eachInvite in invitees">                
+                <td width="47%">
+                  <div>                    
+                    <p style="padding: 0 !important;margin-top: -4px !important;margin-bottom:0 !important;">{{eachInvite.email}}</p>
+                  </div>
+                </td>
+                <td width="20%">
+                  <div>
+                   --
+                  </div>
+                </td>
+                <td width="20%">
+                  <div>
+                    <span style="background-color: #e5e5e5; padding-left: 3px;padding-right: 3px; border-radius: 2px;color: #549afc;">Invited..</span>
+                  </div>
+                </td>
+                <td class="table-TxtAlign-center" width="13%">
+                  <div>
+                    <i ng-show="!appInvitedSpinner[$index]"  ng-click="removeUserFromInvited($index,eachInvite.email)" class="icon ion-close" style="font-size:12px;"></i>
+                    <i ng-show="appInvitedSpinner[$index]" class="fa fa-spinner fa-spin" style="font-size:12px;"></i>
+                  </div>
+                </td>
+              </tr>
+              <!--/Invitees-->
+
+            </tbody>
+          </table>
+        </div>       
+          
+       </div>               
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Close</button>  
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<!-- /Add Developers Modal -->
+
+
+<!--Confirm Remove Developer-->
+<div class="modal fade colored-header danger" id="removedevconform" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">    
+
+    <div style="height:80px; width:100%;padding:13px;background-color:#D60A00;border-top-left-radius:4px;border-top-right-radius:4px;">
+      <div class="pull-left" style="padding-left:8px;">
+        <div>
+          <span style="font-size:22px;color:white;">Delete App</span>
+        </div>
+
+        <div>
+          <span style="font-size:14px;color:white;">You're about delete</span>
+          <span style="font-size:14px;color:white;font-weight:700;">"{{selectedProject.name}}"</span>           
+        </div>
+
+      </div> 
+      <div class="pull-right" class="flex-general-column-wrapper-center" style="padding-right:8px;height:56px;width:56px;border-radius:50px;background-color:#9b0601;">
+        <div class="flex-general-column-wrapper-center" style="height:56px;width:56px;">
+          <i class="fa fa-cloud" style="font-size:30px;color:white;"></i>
+        </div>
+      </div>         
+    </div>
+
+
+    <div class="modal-body">
+      <div class="text-center">                
+        <p style="font-size: 14px;font-weight:700;color:#828282;">There are no other developers to collaborate on this app.<br/> Do you want to delete this app instead?</p>                 
+      </div>
+
+      <div style="width:100%;">
+          
+        <div class="flex-general-column-wrapper-center" style="width:100%;">
+          <div class="flex-general-column-wrapper-center" style="width:50%;margin-left:65px;">           
+            <div class="flex-general-column-wrapper-center" style="width:100%;height:50px;">
+              <input type="text" ng-model="confirmAppName" class="defaultInput-txt" style="width:100%;height:100%;font-size:18px;" placeholder="Confirm App name..">
+            </div>
+          </div>
+
+        </div>                
+
+      </div>
+     
+    </div>
+
+    <div class="modal-footer">
+      <button  type="button" class="btn btn-default btn-flat" data-dismiss="modal">Cancel</button>
+
+      <!--continue btn-->
+      <button type="button" class="btn btn-flat" style="background-color:#D60A00; color:white;" ng-click="processRemoveDeveloper(removeDevIndex,removeDevUser)">Continue</button>        
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/Confirm Remove Developer-->
+
+<!--Slack chat-->
+<a href="http://slack.cloudboost.io" target="_blank">
+    <div class="intercomm flex-general-column-wrapper-center">    
+        <i class="icon ion-ios-chatboxes" style="font-size:26px !important; color:white;margin-top:3px;"></i>
+    </div> 
+</a>
+<!--/Slack chat-->
+
+   
+  
+  
